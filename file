@@ -1,0 +1,337 @@
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~
+$ docker login 68.183.92.199:8083
+Error: Cannot perform an interactive login from a non TTY device
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~
+$ docker login 68.183.92.199:8083
+Error: Cannot perform an interactive login from a non TTY device
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~
+$ docker login 68.183.92.199:8083
+Authenticating with existing credentials... [Username: ranjan]
+
+ Info -> To login with a different account, run 'docker logout' followed by 'docker login'
+
+
+Login Succeeded
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~
+$ docker images
+REPOSITORY             TAG       IMAGE ID       CREATED         SIZE
+my-app                 1.0       a8b96f4ecf45   43 hours ago    126MB
+redis                  latest    78f2dcef8858   8 days ago      128MB
+postgres               latest    4e86ce23c73b   13 days ago     438MB
+mongo                  latest    a7c5f35e6c6d   2 weeks ago     890MB
+zricethezav/gitleaks   latest    0526aec19cf2   3 weeks ago     38.7MB
+ubuntu                 latest    a0e45e2ce6e6   3 weeks ago     78.1MB
+tiktaktoe-demo         v1        4683ac603ac1   2 months ago    48.1MB
+redis                  6.0       67dd041c7103   13 months ago   105MB
+mongo-express          latest    870141b735e7   14 months ago   182MB
+postgres               9.6       027ccf656dc1   3 years ago     200MB
+redis                  4.0       191c4017dcdd   5 years ago     89.3MB
+postgres               10.10     9a05a2b9e69f   5 years ago     211MB
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~
+$ docker tag my-app:1.0 68.183.92.199:8083/my-app:1.0
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~
+$ docker images
+REPOSITORY                  TAG       IMAGE ID       CREATED         SIZE
+my-app                      1.0       a8b96f4ecf45   44 hours ago    126MB
+68.183.92.199:8083/my-app   1.0       a8b96f4ecf45   44 hours ago    126MB
+redis                       latest    78f2dcef8858   8 days ago      128MB
+postgres                    latest    4e86ce23c73b   13 days ago     438MB
+mongo                       latest    a7c5f35e6c6d   2 weeks ago     890MB
+zricethezav/gitleaks        latest    0526aec19cf2   3 weeks ago     38.7MB
+ubuntu                      latest    a0e45e2ce6e6   3 weeks ago     78.1MB
+tiktaktoe-demo              v1        4683ac603ac1   2 months ago    48.1MB
+redis                       6.0       67dd041c7103   13 months ago   105MB
+mongo-express               latest    870141b735e7   14 months ago   182MB
+postgres                    9.6       027ccf656dc1   3 years ago     200MB
+redis                       4.0       191c4017dcdd   5 years ago     89.3MB
+postgres                    10.10     9a05a2b9e69f   5 years ago     211MB
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~
+$ docker push 68.183.92.199:8083/my-app:1.0
+The push refers to repository [68.183.92.199:8083/my-app]
+6f79c1b0c4b3: Preparing
+5f70bf18a086: Preparing
+b3e6357e58f0: Preparing
+a159b5b3b1cd: Preparing
+629960860aca: Preparing
+f019278bad8b: Preparing
+8ca4f4055a70: Preparing
+3e207b409db3: Preparing
+8ca4f4055a70: Waiting
+3e207b409db3: Waiting
+f019278bad8b: Waiting
+629960860aca: Pushed
+a159b5b3b1cd: Pushed
+5f70bf18a086: Pushed
+b3e6357e58f0: Pushed
+6f79c1b0c4b3: Pushed
+f019278bad8b: Pushed
+3e207b409db3: Pushed
+8ca4f4055a70: Pushed
+1.0: digest: sha256:2c977a1af8a6f9a892503844d39ab796702234e4069087edaaedfa50d46bdcaf size: 1993
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~
+$ docker images
+REPOSITORY                  TAG       IMAGE ID       CREATED         SIZE
+68.183.92.199:8083/my-app   1.0       a8b96f4ecf45   44 hours ago    126MB
+my-app                      1.0       a8b96f4ecf45   44 hours ago    126MB
+redis                       latest    78f2dcef8858   8 days ago      128MB
+postgres                    latest    4e86ce23c73b   13 days ago     438MB
+mongo                       latest    a7c5f35e6c6d   2 weeks ago     890MB
+zricethezav/gitleaks        latest    0526aec19cf2   3 weeks ago     38.7MB
+ubuntu                      latest    a0e45e2ce6e6   3 weeks ago     78.1MB
+tiktaktoe-demo              v1        4683ac603ac1   2 months ago    48.1MB
+redis                       6.0       67dd041c7103   13 months ago   105MB
+mongo-express               latest    870141b735e7   14 months ago   182MB
+postgres                    9.6       027ccf656dc1   3 years ago     200MB
+redis                       4.0       191c4017dcdd   5 years ago     89.3MB
+postgres                    10.10     9a05a2b9e69f   5 years ago     211MB
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~
+$ cd Doc
+Documents/ docker/
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~
+$ cd docker
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/docker
+$ ls
+docker-project/  simple-js-app/
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/docker
+$ cd simple-js-app/
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/docker/simple-js-app
+$ ls
+techworld-js-docker-demo-app-master/
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/docker/simple-js-app
+$ cd ..
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/docker
+$ cd docker-project/
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/docker/docker-project (main)
+$ ls
+README.md  app.py  requirements.txt  templates/
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/docker/docker-project (main)
+$ cd ..
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/docker
+$ ls
+docker-project/  simple-js-app/
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/docker
+$ cd simple-js-app/
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/docker/simple-js-app
+$ ls
+techworld-js-docker-demo-app-master/
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/docker/simple-js-app
+$ cd techworld-js-docker-demo-app-master/
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/docker/simple-js-app/techworld-js-docker-demo-app-master
+$ ls
+techworld-js-docker-demo-app-master/
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/docker/simple-js-app/techworld-js-docker-demo-app-master
+$ cd techworld-js-docker-demo-app-master/
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/docker/simple-js-app/techworld-js-docker-demo-app-master/techworld-js-docker-demo-app-master
+$ ls
+Dockerfile  README.md  app/  docker-compose.yaml
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/docker/simple-js-app/techworld-js-docker-demo-app-master/techworld-js-docker-demo-app-master
+$ vim Docker
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/docker/simple-js-app/techworld-js-docker-demo-app-master/techworld-js-docker-demo-app-master
+$ vim Dockerfile
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/docker/simple-js-app/techworld-js-docker-demo-app-master/techworld-js-docker-demo-app-master
+$ ls
+Dockerfile  README.md  app/  docker-compose.yaml
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/docker/simple-js-app/techworld-js-docker-demo-app-master/techworld-js-docker-demo-app-master
+$ docker build -t my-app:v2
+ERROR: docker: 'docker buildx build' requires 1 argument
+
+Usage:  docker buildx build [OPTIONS] PATH | URL | -
+
+Run 'docker buildx build --help' for more information
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/docker/simple-js-app/techworld-js-docker-demo-app-master/techworld-js-docker-demo-app-master
+$ docker build -t my-app:v2 .
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 421B 0.0s done
+#1 WARN: MaintainerDeprecated: Maintainer instruction is deprecated in favor of using label (line 5)
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/node:13-alpine
+#2 ...
+
+#3 [auth] library/node:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:13-alpine
+#2 DONE 2.5s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#5 [1/5] FROM docker.io/library/node:13-alpine@sha256:527c70f74817f6f6b5853588c28de33459178ab72421f1fb7b63a281ab670258
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 292B done
+#6 DONE 0.0s
+
+#7 [2/5] RUN mkdir -p /home/app
+#7 CACHED
+
+#8 [3/5] COPY ./app /home/app
+#8 CACHED
+
+#9 [4/5] WORKDIR /home/app
+#9 CACHED
+
+#10 [5/5] RUN npm install
+#10 CACHED
+
+#11 exporting to image
+#11 exporting layers done
+#11 writing image sha256:15355b89246fe67a7c136045f48b53a391949231a7e89ce26a7fe77f51734fcb done
+#11 naming to docker.io/library/my-app:v2 0.0s done
+#11 DONE 0.0s
+
+ 1 warning found (use docker --debug to expand):
+ - MaintainerDeprecated: Maintainer instruction is deprecated in favor of using label (line 5)
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/docker/simple-js-app/techworld-js-docker-demo-app-master/techworld-js-docker-demo-app-master
+$ docker images
+REPOSITORY                  TAG       IMAGE ID       CREATED         SIZE
+68.183.92.199:8083/my-app   1.0       a8b96f4ecf45   44 hours ago    126MB
+my-app                      1.0       a8b96f4ecf45   44 hours ago    126MB
+my-app                      v2        15355b89246f   44 hours ago    126MB
+redis                       latest    78f2dcef8858   8 days ago      128MB
+postgres                    latest    4e86ce23c73b   13 days ago     438MB
+mongo                       latest    a7c5f35e6c6d   2 weeks ago     890MB
+zricethezav/gitleaks        latest    0526aec19cf2   3 weeks ago     38.7MB
+ubuntu                      latest    a0e45e2ce6e6   3 weeks ago     78.1MB
+tiktaktoe-demo              v1        4683ac603ac1   2 months ago    48.1MB
+redis                       6.0       67dd041c7103   13 months ago   105MB
+mongo-express               latest    870141b735e7   14 months ago   182MB
+postgres                    9.6       027ccf656dc1   3 years ago     200MB
+redis                       4.0       191c4017dcdd   5 years ago     89.3MB
+postgres                    10.10     9a05a2b9e69f   5 years ago     211MB
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/docker/simple-js-app/techworld-js-docker-demo-app-master/techworld-js-docker-demo-app-master
+$ docker tag my-app:1.0 68.183.92.199:8083/my-app:v2
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/docker/simple-js-app/techworld-js-docker-demo-app-master/techworld-js-docker-demo-app-master
+$ docker push my-app:1.0 68.183.92.199:8083/my-app:v2
+docker: 'docker push' requires 1 argument
+
+Usage:  docker push [OPTIONS] NAME[:TAG]
+
+Run 'docker push --help' for more information
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/docker/simple-js-app/techworld-js-docker-demo-app-master/techworld-js-docker-demo-app-master
+$ docker push 68.183.92.199:8083/my-app:v2
+The push refers to repository [68.183.92.199:8083/my-app]
+6f79c1b0c4b3: Preparing
+5f70bf18a086: Preparing
+b3e6357e58f0: Preparing
+a159b5b3b1cd: Preparing
+629960860aca: Preparing
+f019278bad8b: Preparing
+8ca4f4055a70: Preparing
+3e207b409db3: Preparing
+f019278bad8b: Waiting
+8ca4f4055a70: Waiting
+3e207b409db3: Waiting
+629960860aca: Layer already exists
+6f79c1b0c4b3: Layer already exists
+a159b5b3b1cd: Layer already exists
+5f70bf18a086: Layer already exists
+b3e6357e58f0: Layer already exists
+f019278bad8b: Layer already exists
+3e207b409db3: Layer already exists
+8ca4f4055a70: Layer already exists
+v2: digest: sha256:2c977a1af8a6f9a892503844d39ab796702234e4069087edaaedfa50d46bdcaf size: 1993
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/docker/simple-js-app/techworld-js-docker-demo-app-master/techworld-js-docker-demo-app-master
+$ curl -u ranjan:admin123 -X GET 'http://68.183.92.199:8081/service/rest/v1/components?repository=docker-hosted'
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  2041  100  2041    0     0  11217      0 --:--:-- --:--:-- --:--:-- 11276{
+  "items" : [ {
+    "id" : "RG9ja2VyLWhvc3RlZDo0ZjFiYmNkZA",
+    "repository" : "Docker-hosted",
+    "format" : "docker",
+    "group" : "",
+    "name" : "my-app",
+    "version" : "1.0",
+    "assets" : [ {
+      "downloadUrl" : "http://68.183.92.199:8081/repository/Docker-hosted/v2/my-app/manifests/1.0",
+      "path" : "/v2/my-app/manifests/1.0",
+      "id" : "RG9ja2VyLWhvc3RlZDo2NjMxMWQ3Zg",
+      "repository" : "Docker-hosted",
+      "format" : "docker",
+      "checksum" : {
+        "sha256" : "2c977a1af8a6f9a892503844d39ab796702234e4069087edaaedfa50d46bdcaf",
+        "sha1" : "4e35c71909939e835d7a75a4c7766c90617b4357"
+      },
+      "contentType" : "application/vnd.docker.distribution.manifest.v2+json",
+      "lastModified" : "2025-05-22T08:15:45.171+00:00",
+      "lastDownloaded" : null,
+      "uploader" : "ranjan",
+      "uploaderIp" : "49.37.75.243",
+      "fileSize" : 1993,
+      "blobCreated" : "2025-05-22T08:15:45.173+00:00",
+      "blobStoreName" : null,
+      "docker" : { }
+    } ]
+  }, {
+    "id" : "RG9ja2VyLWhvc3RlZDo5ZTM3NzliYQ",
+    "repository" : "Docker-hosted",
+    "format" : "docker",
+    "group" : "",
+    "name" : "my-app",
+    "version" : "v2",
+    "assets" : [ {
+      "downloadUrl" : "http://68.183.92.199:8081/repository/Docker-hosted/v2/my-app/manifests/v2",
+      "path" : "/v2/my-app/manifests/v2",
+      "id" : "RG9ja2VyLWhvc3RlZDpiNTRjZGE1Yw",
+      "repository" : "Docker-hosted",
+      "format" : "docker",
+      "checksum" : {
+        "sha256" : "2c977a1af8a6f9a892503844d39ab796702234e4069087edaaedfa50d46bdcaf",
+        "sha1" : "4e35c71909939e835d7a75a4c7766c90617b4357"
+      },
+      "contentType" : "application/vnd.docker.distribution.manifest.v2+json",
+      "lastModified" : "2025-05-22T08:21:54.649+00:00",
+      "lastDownloaded" : null,
+      "uploader" : "ranjan",
+      "uploaderIp" : "49.37.75.243",
+      "fileSize" : 1993,
+      "blobCreated" : "2025-05-22T08:21:54.651+00:00",
+      "blobStoreName" : null,
+      "docker" : { }
+    } ]
+  } ],
+  "continuationToken" : null
+}
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/docker/simple-js-app/techworld-js-docker-demo-app-master/techworld-js-docker-demo-app-master
+$
