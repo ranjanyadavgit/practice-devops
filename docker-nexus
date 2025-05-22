@@ -65,3 +65,38 @@ root@ubuntu-s-2vcpu-4gb-blr1-01:~# netstat -lntp
 Active Internet connections (only servers)
 Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
 tcp        0      0 127.0.0.54:53           0.0.0.0:*               LISTEN      497/
+
+root@ubuntu-s-2vcpu-4gb-blr1-01:~# docker volume ls
+DRIVER    VOLUME NAME
+local     nexus-data
+root@ubuntu-s-2vcpu-4gb-blr1-01:~# docker inspect nexus-data
+[
+    {
+        "CreatedAt": "2025-05-22T10:29:34Z",
+        "Driver": "local",
+        "Labels": null,
+        "Mountpoint": "/var/snap/docker/common/var-lib-docker/volumes/nexus-data/_data",
+        "Name": "nexus-data",
+        "Options": null,
+        "Scope": "local"
+    }
+]
+root@ubuntu-s-2vcpu-4gb-blr1-01:~# ls /var/snap/docker/common/var-lib-docker/volumes/nexus-data/_data
+admin.password  blobs  clean_cache  db  elasticsearch  etc  javaprefs  keystores  log  restore-from-backup  tmp
+root@ubuntu-s-2vcpu-4gb-blr1-01:~# docker ps
+CONTAINER ID   IMAGE             COMMAND                  CREATED          STATUS          PORTS                                       NAMES
+12abe7ee011e   sonatype/nexus3   "/opt/sonatype/nexus…"   10 minutes ago   Up 10 minutes   0.0.0.0:8081->8081/tcp, :::8081->8081/tcp   nexus
+root@ubuntu-s-2vcpu-4gb-blr1-01:~# docker exec -it 12abe7ee011e /bn/bash
+OCI runtime exec failed: exec failed: unable to start container process: exec: "/bn/bash": stat /bn/bash: no such file or directory: unknown
+root@ubuntu-s-2vcpu-4gb-blr1-01:~# docker exec -it 12abe7ee011e /bin/bash
+bash-5.1$ ls
+nexus  sonatype-work  start-nexus-repository-manager.sh
+bash-5.1$ cd nexus/
+bash-5.1$ ls
+NOTICE.txt  OSS-LICENSE.txt  bin  deploy  etc
+bash-5.1$ cd ..
+bash-5.1$ ls
+nexus  sonatype-work  start-nexus-repository-manager.sh
+bash-5.1$
+
+
