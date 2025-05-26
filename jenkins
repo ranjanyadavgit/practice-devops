@@ -9,6 +9,43 @@ jenkins@2ebf706ddcab:/$
 root@ubuntu-s-2vcpu-4gb-blr1-01:~# docker exec -it -u 0 2ebf706ddcab bash
 root@2ebf706ddcab:/#
 
+root@2ebf706ddcab:/# cat /etc/issue
+Debian GNU/Linux 12 \n \l
+
+root@2ebf706ddcab:/# cat /etc/os-release
+PRETTY_NAME="Debian GNU/Linux 12 (bookworm)"
+NAME="Debian GNU/Linux"
+VERSION_ID="12"
+VERSION="12 (bookworm)"
+VERSION_CODENAME=bookworm
+ID=debian
+HOME_URL="https://www.debian.org/"
+SUPPORT_URL="https://www.debian.org/support"
+BUG_REPORT_URL="https://bugs.debian.org/"
+root@2ebf706ddcab:/#
+
+root@2ebf706ddcab:/# apt update
+Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [48.0 kB]
+Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8793 kB]
+Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [512 B]
+Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [261 kB]
+Fetched 9309 kB in 2s (4782 kB/s)
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+16 packages can be upgraded. Run 'apt list --upgradable' to see them.
+root@2ebf706ddcab:/# apt install curl
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+curl is already the newest version (7.88.1-10+deb12u12).
+0 upgraded, 0 newly installed, 0 to remove and 16 not upgraded.
+root@2ebf706ddcab:/#
+
+
+
 
 
 
