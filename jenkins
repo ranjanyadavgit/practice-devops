@@ -1,1 +1,8 @@
  docker run -p 8080:8080 -p 50000:50000 -d -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts
+
+root@ubuntu-s-2vcpu-4gb-blr1-01:~# docker ps
+CONTAINER ID   IMAGE                 COMMAND                  CREATED         STATUS         PORTS                                                                                      NAMES
+2ebf706ddcab   jenkins/jenkins:lts   "/usr/bin/tini -- /u…"   2 minutes ago   Up 2 minutes   0.0.0.0:8080->8080/tcp, :::8080->8080/tcp, 0.0.0.0:50000->50000/tcp, :::50000->50000/tcp   upbeat_carver
+root@ubuntu-s-2vcpu-4gb-blr1-01:~# docker exec -it 2ebf706ddcab bash
+jenkins@2ebf706ddcab:/$
+
