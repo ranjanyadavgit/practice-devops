@@ -6,3 +6,9 @@ CONTAINER ID   IMAGE                 COMMAND                  CREATED         ST
 root@ubuntu-s-2vcpu-4gb-blr1-01:~# docker exec -it 2ebf706ddcab bash
 jenkins@2ebf706ddcab:/$
 
+root@ubuntu-s-2vcpu-4gb-blr1-01:~# docker exec -it -u 0 2ebf706ddcab bash
+root@2ebf706ddcab:/#
+
+
+
+
