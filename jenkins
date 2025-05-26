@@ -167,6 +167,62 @@ root@ubuntu-s-2vcpu-4gb-blr1-01:~# bash nodesource_setup.sh
 
 Continuing in 20 seconds ...
 
+oot@4afe5dcfa0b8:/# npm -v
+9.2.0
+root@4afe5dcfa0b8:/# client_loop: send disconnect: Connection reset by peer
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~
+$ docker volume ls
+error during connect: Get "http://%2F%2F.%2Fpipe%2FdockerDesktopLinuxEngine/v1.48/volumes": open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~
+$ ssh root@159.89.168.5
+Welcome to Ubuntu 24.10 (GNU/Linux 6.11.0-9-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Mon May 26 18:58:46 UTC 2025
+
+  System load:  0.0               Processes:             128
+  Usage of /:   6.4% of 76.45GB   Users logged in:       0
+  Memory usage: 33%               IPv4 address for eth0: 159.89.168.5
+  Swap usage:   0%                IPv4 address for eth0: 10.47.0.7
+
+168 updates can be applied immediately.
+83 of these updates are standard security updates.
+To see these additional updates run: apt list --upgradable
+
+New release '25.04' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+Last login: Mon May 26 18:33:24 2025 from 49.37.73.60
+root@ubuntu-s-2vcpu-4gb-blr1-01:~# docker volume ls
+DRIVER    VOLUME NAME
+local     jenkins_home
+root@ubuntu-s-2vcpu-4gb-blr1-01:~# docker inspect jenkins_home
+[
+    {
+        "CreatedAt": "2025-05-26T18:08:23Z",
+        "Driver": "local",
+        "Labels": null,
+        "Mountpoint": "/var/lib/docker/volumes/jenkins_home/_data",
+        "Name": "jenkins_home",
+        "Options": null,
+        "Scope": "local"
+    }
+]
+root@ubuntu-s-2vcpu-4gb-blr1-01:~# ls /var/lib/docker/volumes/jenkins_home/_data
+config.xml                        identity.key.enc                                     jobs                                                                queue.xml                 users
+copy_reference_file.log           jenkins.install.InstallUtil.lastExecVersion          logs                                                                secret.key                war
+hudson.model.UpdateCenter.xml     jenkins.install.UpgradeWizard.state                  nodeMonitors.xml                                                    secret.key.not-so-secret  workspace
+hudson.plugins.git.GitTool.xml    jenkins.model.JenkinsLocationConfiguration.xml       org.jenkinsci.plugins.gitclient.JGitApacheTool.xml                  secrets
+hudson.plugins.gradle.Gradle.xml  jenkins.mvn.GlobalMavenConfig.xml                    org.jenkinsci.plugins.gitclient.JGitTool.xml                        tools
+hudson.tasks.Ant.xml              jenkins.plugins.nodejs.tools.NodeJSInstallation.xml  org.jenkinsci.plugins.pipeline.maven.GlobalPipelineMavenConfig.xml  updates
+hudson.tasks.Maven.xml            jenkins.telemetry.Correlator.xml                     plugins                    
+
 
 
 
