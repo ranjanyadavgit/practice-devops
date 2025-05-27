@@ -351,6 +351,64 @@ redis             latest         90b270fb6df3   13 days ago          128MB
 jenkins/jenkins   lts            ed331f9d3352   3 weeks ago          466MB
 openjdk           8-jre-alpine   f7a292bbb70c   6 years ago          84.9MB
 
+Lenovo@DESKTOP-M5DT73G MINGW64 ~
+$ ssh root@159.89.168.5
+Welcome to Ubuntu 24.10 (GNU/Linux 6.11.0-9-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Tue May 27 09:21:55 UTC 2025
+
+  System load:  0.0               Processes:             134
+  Usage of /:   7.3% of 76.45GB   Users logged in:       0
+  Memory usage: 38%               IPv4 address for eth0: 159.89.168.5
+  Swap usage:   0%                IPv4 address for eth0: 10.47.0.7
+
+85 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+New release '25.04' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+*** System restart required ***
+Last login: Tue May 27 08:01:48 2025 from 49.37.73.60
+root@ubuntu-s-2vcpu-4gb-blr1-01:~# docker images
+REPOSITORY                 TAG            IMAGE ID       CREATED       SIZE
+ranjanyadav1925/demo-app   jma-1.0        30f0a538062a   2 hours ago   102MB
+java-maven-app             2.0            30f0a538062a   2 hours ago   102MB
+java-maven-app             latest         30f0a538062a   2 hours ago   102MB
+java-mvn-app               1.0            30f0a538062a   2 hours ago   102MB
+redis                      latest         90b270fb6df3   13 days ago   128MB
+jenkins/jenkins            lts            ed331f9d3352   3 weeks ago   466MB
+openjdk                    8-jre-alpine   f7a292bbb70c   6 years ago   84.9MB
+root@ubuntu-s-2vcpu-4gb-blr1-01:~# docker rmi java-maven-app:2.0
+Untagged: java-maven-app:2.0
+root@ubuntu-s-2vcpu-4gb-blr1-01:~# docker rmi redis:latest
+Untagged: redis:latest
+Untagged: redis@sha256:b3ad79880c88e302deb5e0fed6cee3e90c0031eb90cd936b01ef2f83ff5b3ff2
+Deleted: sha256:90b270fb6df331ff456014744f4fd3de812584386de75e762dc73add32533311
+Deleted: sha256:6521e85d53b9691219f3d219ebfbd8ee38889a8e78ba9f2ceea633f503ba02ee
+Deleted: sha256:1bb65e77232a4f1ef04608a8aac60b8e5247efef72997bd1ae624869a1a874fa
+Deleted: sha256:7d4979c28668d57781e3e1f83ae55953593892d70f9793143046ffa0ec5b2d92
+Deleted: sha256:eb7889deb156b1466906f28f5f43d1a7601528987c7295b53e8047be55e55b86
+Deleted: sha256:f84be5f71ed63fc052cc35a9ac28b1dfe1447ceaf1c63452dce8e457b4b814b4
+Deleted: sha256:756426b1fc82a8ae1e9e2de0a7b84d2a400e26083324cc526f7ce79766fb804f
+Deleted: sha256:ace34d1d784c01e3f9d156687089e8f58f786e23ccd097bdbbf337d6d28b3783
+root@ubuntu-s-2vcpu-4gb-blr1-01:~# docker images
+REPOSITORY                 TAG            IMAGE ID       CREATED       SIZE
+java-maven-app             latest         30f0a538062a   2 hours ago   102MB
+java-mvn-app               1.0            30f0a538062a   2 hours ago   102MB
+ranjanyadav1925/demo-app   jma-1.0        30f0a538062a   2 hours ago   102MB
+jenkins/jenkins            lts            ed331f9d3352   3 weeks ago   466MB
+openjdk                    8-jre-alpine   f7a292bbb70c   6 years ago   84.9MB
+root@ubuntu-s-2vcpu-4gb-blr1-01:~# docker rmi java-maven-app:latest
+Untagged: java-maven-app:latest
+root@ubuntu-s-2vcpu-4gb-blr1-01:~#
+
+
 
 
 
