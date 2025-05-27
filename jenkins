@@ -276,6 +276,65 @@ hudson.plugins.gradle.Gradle.xml  jenkins.mvn.GlobalMavenConfig.xml             
 hudson.tasks.Ant.xml              jenkins.plugins.nodejs.tools.NodeJSInstallation.xml  org.jenkinsci.plugins.pipeline.maven.GlobalPipelineMavenConfig.xml  updates
 hudson.tasks.Maven.xml            jenkins.telemetry.Correlator.xml                     plugins                    
 
+See 'docker run --help'.
+root@ubuntu-s-2vcpu-4gb-blr1-01:~# docker run -p 8080:8080 -p 50000:50000 -d \
+> -v jenkins_home:/var/jenkins_home \
+> -v /var/run/docker.sock:/var/run/docker.sock \
+> -v $(which docker):/usr/bin/docker jenkins/jenkins:lts
+864bfae6a460217339ea75a452616816da5b0a9d09bb2a45b0c576abcb251db3
+root@ubuntu-s-2vcpu-4gb-blr1-01:~#
+
+For more help on how to use Docker, head to https://docs.docker.com/go/guides/
+jenkins@864bfae6a460:/$ docker pull redis:redis
+permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Post "http://%2Fvar%2Frun%2Fdocker.sock/v1.45/images/create?fromImage=redis&tag=redis": dial unix /var/run/docker.sock: connect: permission denied
+jenkins@864bfae6a460:/$ ls -l /var/run/docker.sock
+srw-rw---- 1 root 112 0 May 26 18:06 /var/run/docker.sock
+jenkins@864bfae6a460:/$
+   69  docker run -p 8080:8080 -p 50000:50000 -d -v jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker jenkins/jenkins:lts
+   70  docker exec -it 864bfae6a460217339ea75a452616816da5b0a9d09bb2a45b0c576abcb251db3 bash
+   71  clear
+   72  ls -la
+   73  docker exec -it -u 0 864bfae6a46021 bash
+   74  history
+root@ubuntu-s-2vcpu-4gb-blr1-01:~#
+
+root@864bfae6a460:/# chmod 666 /var/run/docker.sock
+root@864bfae6a460:/# ls /var/run/docker.sock
+/var/run/docker.sock
+root@864bfae6a460:/# ls -l /var/run/docker.sock
+srw-rw-rw- 1 root 112 0 May 26 18:06 /var/run/docker.sock
+root@864bfae6a460:/#
+
+root@ubuntu-s-2vcpu-4gb-blr1-01:~# docker ps
+CONTAINER ID   IMAGE                 COMMAND                  CREATED          STATUS          PORTS                                                                                      NAMES
+864bfae6a460   jenkins/jenkins:lts   "/usr/bin/tini -- /u…"   15 minutes ago   Up 15 minutes   0.0.0.0:8080->8080/tcp, :::8080->8080/tcp, 0.0.0.0:50000->50000/tcp, :::50000->50000/tcp   hardcore_elbakyan
+root@ubuntu-s-2vcpu-4gb-blr1-01:~# docker exec -it 864bfae6a460 bash
+jenkins@864bfae6a460:/$ clear
+
+jenkins@864bfae6a460:/$ docker pull redis
+Using default tag: latest
+latest: Pulling from library/redis
+61320b01ae5e: Pull complete
+f8f9e5369fdd: Pull complete
+b8f8315b617a: Pull complete
+eb61abf5b105: Pull complete
+03bc4ee78aa8: Pull complete
+4f4fb700ef54: Pull complete
+93cd3c5153ab: Pull complete
+Digest: sha256:b3ad79880c88e302deb5e0fed6cee3e90c0031eb90cd936b01ef2f83ff5b3ff2
+Status: Downloaded newer image for redis:latest
+docker.io/library/redis:latest
+jenkins@864bfae6a460:/$
+
+
+
+
+
+
+
+
+
+
 
 
 
