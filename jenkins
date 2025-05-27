@@ -326,6 +326,32 @@ Status: Downloaded newer image for redis:latest
 docker.io/library/redis:latest
 jenkins@864bfae6a460:/$
 
+root@ubuntu-s-2vcpu-4gb-blr1-01:~# docker images
+REPOSITORY        TAG            IMAGE ID       CREATED          SIZE
+java-mvn-app      1.0            30f0a538062a   21 seconds ago   102MB
+redis             latest         90b270fb6df3   13 days ago      128MB
+jenkins/jenkins   lts            ed331f9d3352   3 weeks ago      466MB
+openjdk           8-jre-alpine   f7a292bbb70c   6 years ago      84.9MB
+root@ubuntu-s-2vcpu-4gb-blr1-01:~# docker ps
+CONTAINER ID   IMAGE                 COMMAND                  CREATED          STATUS          PORTS                                                                                      NAMES
+864bfae6a460   jenkins/jenkins:lts   "/usr/bin/tini -- /u…"   26 minutes ago   Up 26 minutes   0.0.0.0:8080->8080/tcp, :::8080->8080/tcp, 0.0.0.0:50000->50000/tcp, :::50000->50000/tcp   hardcore_elbakyan
+root@ubuntu-s-2vcpu-4gb-blr1-01:~# docker images
+REPOSITORY        TAG            IMAGE ID       CREATED              SIZE
+java-maven-app    2.0            30f0a538062a   About a minute ago   102MB
+java-mvn-app      1.0            30f0a538062a   About a minute ago   102MB
+redis             latest         90b270fb6df3   13 days ago          128MB
+jenkins/jenkins   lts            ed331f9d3352   3 weeks ago          466MB
+openjdk           8-jre-alpine   f7a292bbb70c   6 years ago          84.9MB
+root@ubuntu-s-2vcpu-4gb-blr1-01:~# docker rmi java-maven-app:2.0
+Untagged: java-maven-app:2.0
+root@ubuntu-s-2vcpu-4gb-blr1-01:~# docker images
+REPOSITORY        TAG            IMAGE ID       CREATED              SIZE
+java-mvn-app      1.0            30f0a538062a   About a minute ago   102MB
+redis             latest         90b270fb6df3   13 days ago          128MB
+jenkins/jenkins   lts            ed331f9d3352   3 weeks ago          466MB
+openjdk           8-jre-alpine   f7a292bbb70c   6 years ago          84.9MB
+
+
 
 
 
