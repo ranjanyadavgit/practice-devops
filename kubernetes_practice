@@ -1,0 +1,331 @@
+PS C:\Users\Lenovo>
+PS C:\Users\Lenovo> history
+
+  Id CommandLine
+  -- -----------
+   1 minikube version
+   2 minikube status
+   3 minikube --start-driver=vm-none
+   4 minikube start --vm-driver=none
+   5 minikube start --driver=docker
+   6 minikube start --driver=docker
+   7 minikube start --driver=docker
+   8 kubectl get nodes
+   9 clear
+  10 minikube status
+  11 kubectl get nodes
+  12 kubectl get pods
+  13 kubectl get svc
+  14 kubectl create --help
+  15 clear
+  16 kubectl create deployment nginx-depl --image=nginx
+  17 kubectl get pods
+  18 kubectl describe pod nginx-depl
+  19 kubectl describe pod nginx-depl
+  20 kubectl describe pod nginx-depl
+  21 kubectl get rc
+  22 kubectl get rs
+  23 clear
+  24 kubectl get pods -o wide
+  25 kubectl edit deployment nginx-depl
+  26 kubectl get pods
+  27 kubectl edit deployment nginx-depl
+  28 kubectl get pods
+  29 kubectl describe deployment nginx-depl
+  30 kubectl get pods
+  31 kubectl get rs
+  32 clear
+  33 kubectl get rs
+  34 kubectl get pods
+  35 kubectl logs nginx-depl-54bd6589c-rzlgp
+  36 kubectl create deployment mongo-db --image=mongo
+  37 kubectl get pods
+  38 kubectl get pods
+  39 kubectl describe pod mongo-db-7f8495ddd4-6gdpj
+  40 kubectl describe pod mongo-db-7f8495ddd4-6gdpj
+  41 kubectl describe pod mongo-db-7f8495ddd4-6gdpj
+  42 kubectl describe pod mongo-db-7f8495ddd4-6gdpj
+  43 kubectl get pods
+  44 kubectl logs mongo-db-7f8495ddd4-6gdpj
+
+
+PS C:\Users\Lenovo> kubectl get rs
+NAME                    DESIRED   CURRENT   READY   AGE
+nginx-depl-54bd6589c    1         1         1       10m
+nginx-depl-558bd7d64c   0         0         0       11m
+nginx-depl-68c944fcbc   0         0         0       17m
+PS C:\Users\Lenovo> kubectl get pods
+NAME                         READY   STATUS    RESTARTS   AGE
+nginx-depl-54bd6589c-rzlgp   1/1     Running   0          10m
+PS C:\Users\Lenovo> kubectl logs nginx-depl-54bd6589c-rzlgp
+PS C:\Users\Lenovo> kubectl create deployment mongo-db --image=mongo
+deployment.apps/mongo-db created
+PS C:\Users\Lenovo> kubectl get pods
+NAME                         READY   STATUS              RESTARTS   AGE
+mongo-db-7f8495ddd4-6gdpj    0/1     ContainerCreating   0          7s
+nginx-depl-54bd6589c-rzlgp   1/1     Running             0          11m
+PS C:\Users\Lenovo> kubectl get pods
+NAME                         READY   STATUS              RESTARTS   AGE
+mongo-db-7f8495ddd4-6gdpj    0/1     ContainerCreating   0          36s
+nginx-depl-54bd6589c-rzlgp   1/1     Running             0          11m
+PS C:\Users\Lenovo> kubectl describe pod mongo-db-7f8495ddd4-6gdpj
+Name:             mongo-db-7f8495ddd4-6gdpj
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Mon, 02 Jun 2025 01:05:47 +0530
+Labels:           app=mongo-db
+                  pod-template-hash=7f8495ddd4
+Annotations:      <none>
+Status:           Pending
+IP:
+IPs:              <none>
+Controlled By:    ReplicaSet/mongo-db-7f8495ddd4
+Containers:
+  mongo:
+    Container ID:
+    Image:          mongo
+    Image ID:
+    Port:           <none>
+    Host Port:      <none>
+    State:          Waiting
+      Reason:       ContainerCreating
+    Ready:          False
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-l6flv (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   False
+  Initialized                 True
+  Ready                       False
+  ContainersReady             False
+  PodScheduled                True
+Volumes:
+  kube-api-access-l6flv:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  74s   default-scheduler  Successfully assigned default/mongo-db-7f8495ddd4-6gdpj to minikube
+  Normal  Pulling    73s   kubelet            Pulling image "mongo"
+PS C:\Users\Lenovo> kubectl describe pod mongo-db-7f8495ddd4-6gdpj
+Name:             mongo-db-7f8495ddd4-6gdpj
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Mon, 02 Jun 2025 01:05:47 +0530
+Labels:           app=mongo-db
+                  pod-template-hash=7f8495ddd4
+Annotations:      <none>
+Status:           Pending
+IP:
+IPs:              <none>
+Controlled By:    ReplicaSet/mongo-db-7f8495ddd4
+Containers:
+  mongo:
+    Container ID:
+    Image:          mongo
+    Image ID:
+    Port:           <none>
+    Host Port:      <none>
+    State:          Waiting
+      Reason:       ContainerCreating
+    Ready:          False
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-l6flv (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   False
+  Initialized                 True
+  Ready                       False
+  ContainersReady             False
+  PodScheduled                True
+Volumes:
+  kube-api-access-l6flv:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  89s   default-scheduler  Successfully assigned default/mongo-db-7f8495ddd4-6gdpj to minikube
+  Normal  Pulling    88s   kubelet            Pulling image "mongo"
+PS C:\Users\Lenovo> kubectl describe pod mongo-db-7f8495ddd4-6gdpj
+Name:             mongo-db-7f8495ddd4-6gdpj
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Mon, 02 Jun 2025 01:05:47 +0530
+Labels:           app=mongo-db
+                  pod-template-hash=7f8495ddd4
+Annotations:      <none>
+Status:           Pending
+IP:
+IPs:              <none>
+Controlled By:    ReplicaSet/mongo-db-7f8495ddd4
+Containers:
+  mongo:
+    Container ID:
+    Image:          mongo
+    Image ID:
+    Port:           <none>
+    Host Port:      <none>
+    State:          Waiting
+      Reason:       ContainerCreating
+    Ready:          False
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-l6flv (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   False
+  Initialized                 True
+  Ready                       False
+  ContainersReady             False
+  PodScheduled                True
+Volumes:
+  kube-api-access-l6flv:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  103s  default-scheduler  Successfully assigned default/mongo-db-7f8495ddd4-6gdpj to minikube
+  Normal  Pulling    102s  kubelet            Pulling image "mongo"
+PS C:\Users\Lenovo> kubectl describe pod mongo-db-7f8495ddd4-6gdpj
+Name:             mongo-db-7f8495ddd4-6gdpj
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Mon, 02 Jun 2025 01:05:47 +0530
+Labels:           app=mongo-db
+                  pod-template-hash=7f8495ddd4
+Annotations:      <none>
+Status:           Running
+IP:               10.244.0.6
+IPs:
+  IP:           10.244.0.6
+Controlled By:  ReplicaSet/mongo-db-7f8495ddd4
+Containers:
+  mongo:
+    Container ID:   docker://45f78ab42aeaef79b26550f38d0503470b413170a2ca14072a03f00fcded7f12
+    Image:          mongo
+    Image ID:       docker-pullable://mongo@sha256:3e8fd506d185ea100867c9da5f90414cee744d1545449038c60190f3fd3cc274
+    Port:           <none>
+    Host Port:      <none>
+    State:          Running
+      Started:      Mon, 02 Jun 2025 01:07:36 +0530
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-l6flv (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True
+  Initialized                 True
+  Ready                       True
+  ContainersReady             True
+  PodScheduled                True
+Volumes:
+  kube-api-access-l6flv:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  117s  default-scheduler  Successfully assigned default/mongo-db-7f8495ddd4-6gdpj to minikube
+  Normal  Pulling    116s  kubelet            Pulling image "mongo"
+  Normal  Pulled     9s    kubelet            Successfully pulled image "mongo" in 1m47.139s (1m47.139s including waiting). Image size: 890332876 bytes.
+  Normal  Created    8s    kubelet            Created container: mongo
+  Normal  Started    8s    kubelet            Started container mongo
+PS C:\Users\Lenovo> kubectl get pods
+NAME                         READY   STATUS    RESTARTS   AGE
+mongo-db-7f8495ddd4-6gdpj    1/1     Running   0          2m10s
+nginx-depl-54bd6589c-rzlgp   1/1     Running   0          13m
+PS C:\Users\Lenovo> kubectl logs mongo-db-7f8495ddd4-6gdpj
+{"t":{"$date":"2025-06-01T19:37:36.500+00:00"},"s":"I",  "c":"CONTROL",  "id":23285,   "ctx":"main","msg":"Automatically disabling TLS 1.0, to force-enable TLS 1.0 specify --sslDisabledProtocols 'none'"}
+{"t":{"$date":"2025-06-01T19:37:36.500+00:00"},"s":"I",  "c":"CONTROL",  "id":5945603, "ctx":"main","msg":"Multi threading initialized"}
+{"t":{"$date":"2025-06-01T19:37:36.500+00:00"},"s":"I",  "c":"NETWORK",  "id":4648601, "ctx":"main","msg":"Implicit TCP FastOpen unavailable. If TCP FastOpen is required, set at least one of the related parameters","attr":{"relatedParameters":["tcpFastOpenServer","tcpFastOpenClient","tcpFastOpenQueueSize"]}}
+{"t":{"$date":"2025-06-01T19:37:36.501+00:00"},"s":"I",  "c":"NETWORK",  "id":4915701, "ctx":"main","msg":"Initialized wire specification","attr":{"spec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":25},"incomingInternalClient":{"minWireVersion":0,"maxWireVersion":25},"outgoing":{"minWireVersion":6,"maxWireVersion":25},"isInternalClient":true}}}
+{"t":{"$date":"2025-06-01T19:37:36.532+00:00"},"s":"I",  "c":"TENANT_M", "id":7091600, "ctx":"main","msg":"Starting TenantMigrationAccessBlockerRegistry"}
+{"t":{"$date":"2025-06-01T19:37:36.532+00:00"},"s":"I",  "c":"CONTROL",  "id":4615611, "ctx":"initandlisten","msg":"MongoDB starting","attr":{"pid":1,"port":27017,"dbPath":"/data/db","architecture":"64-bit","host":"mongo-db-7f8495ddd4-6gdpj"}}
+
+PS C:\Users\Lenovo> kubectl get pods
+NAME                         READY   STATUS    RESTARTS   AGE
+mongo-db-7f8495ddd4-6gdpj    1/1     Running   0          7m9s
+nginx-depl-54bd6589c-rzlgp   1/1     Running   0          18m
+PS C:\Users\Lenovo> kubectl exec -it mongo-db-7f8495ddd4-6gdpj -- /bin/bash
+root@mongo-db-7f8495ddd4-6gdpj:/# cat /etc/issues
+cat: /etc/issues: No such file or directory
+root@mongo-db-7f8495ddd4-6gdpj:/# cat /etc/os-release
+PRETTY_NAME="Ubuntu 24.04.2 LTS"
+NAME="Ubuntu"
+VERSION_ID="24.04"
+VERSION="24.04.2 LTS (Noble Numbat)"
+VERSION_CODENAME=noble
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=noble
+LOGO=ubuntu-logo
+root@mongo-db-7f8495ddd4-6gdpj:/#  
+
+root@mongo-db-7f8495ddd4-6gdpj:/# ls
+bin  boot  data  dev  docker-entrypoint-initdb.d  etc  home  js-yaml.js  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@mongo-db-7f8495ddd4-6gdpj:/#
+
+PS C:\Users\Lenovo> kubectl get deployment
+NAME         READY   UP-TO-DATE   AVAILABLE   AGE
+mongo-db     1/1     1            1           12m
+nginx-depl   1/1     1            1           30m
+PS C:\Users\Lenovo> kubectl delete deployment mongo-db
+deployment.apps "mongo-db" deleted
+PS C:\Users\Lenovo> kubectl delete deployment nginx-depl
+deployment.apps "nginx-depl" deleted
+PS C:\Users\Lenovo>
+PS C:\Users\Lenovo> kubectl get rs
+No resources found in default namespace.
+PS C:\Users\Lenovo> kubectl get replicaset
+No resources found in default namespace.
+PS C:\Users\Lenovo>
