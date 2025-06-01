@@ -329,3 +329,28 @@ No resources found in default namespace.
 PS C:\Users\Lenovo> kubectl get replicaset
 No resources found in default namespace.
 PS C:\Users\Lenovo>
+
+
+C:\Users\Lenovo\Downloads\nginx-deployment.yml
+PS C:\Users\Lenovo> kubectl apply -f "C:\Users\Lenovo\Downloads\nginx-deployment.yml"
+deployment.apps/nginx-deployment created
+PS C:\Users\Lenovo> kubectl get deployment
+NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+nginx-deployment   0/2     2            0           12s
+PS C:\Users\Lenovo> kubectl get pods
+NAME                                READY   STATUS              RESTARTS   AGE
+nginx-deployment-647677fc66-9mtk8   0/1     ContainerCreating   0          22s
+nginx-deployment-647677fc66-mm2fj   0/1     ContainerCreating   0          22s
+PS C:\Users\Lenovo> kubectl get pods
+NAME                                READY   STATUS    RESTARTS   AGE
+nginx-deployment-647677fc66-9mtk8   1/1     Running   0          51s
+nginx-deployment-647677fc66-mm2fj   1/1     Running   0          51s
+PS C:\Users\Lenovo> kubectl apply -f "C:\Users\Lenovo\Downloads\nginx-deployment.yml"
+deployment.apps/nginx-deployment configured
+PS C:\Users\Lenovo> kubectl get rs
+NAME                          DESIRED   CURRENT   READY   AGE
+nginx-deployment-647677fc66   1         1         1       62s
+PS C:\Users\Lenovo> kubectl get pods
+NAME                                READY   STATUS    RESTARTS   AGE
+nginx-deployment-647677fc66-mm2fj   1/1     Running   0          66s
+PS C:\Users\Lenovo>
