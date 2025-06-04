@@ -1,0 +1,36 @@
+PS C:\Users\Lenovo> history
+
+  Id CommandLine
+  -- -----------
+   1 kubectl get pod -n kube-system
+   2 kubectl get pod -n kube-system
+   3 clear
+   4 clear
+   5 kubectl get pod -n kube-system
+   6 kubectl get po
+   7 kubectl get ns
+   8 kubectl get pod - ingress-nginx
+   9 kubectl get pod -n ingress-nginx
+  10 clear
+  11 kubectl apply -f "C:\Users\Lenovo\Downloads\mosquitto-without-volume.yml"
+  12 kubectl get deploy
+  13 kubectl describe deployment mosquitto
+  14 kubectl get deploy
+  15 clear
+  16 kubectl get pod
+  17 kubectl exec -it mosquitto-7bb66d844-2c8sf - /bin/sh
+  18 kubectl exec -it mosquitto-7bb66d844-2c8sf -- /bin/sh
+  19 kubectl get pod
+  20 kubectl get deploy
+  21 kubectl delete -f "C:\Users\Lenovo\Downloads\mosquitto-without-volume.yml"
+  22 kubectl get deploy
+  23 kubectl get pod
+  24 clear
+
+
+PS C:\Users\Lenovo>
+
+
+
+
+
