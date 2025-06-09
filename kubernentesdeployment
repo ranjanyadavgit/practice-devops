@@ -1,0 +1,74 @@
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/Downloads
+$ kubectl config view
+apiVersion: v1
+clusters: null
+contexts: null
+current-context: ""
+kind: Config
+preferences: {}
+users: null
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/Downloads
+$ export KUBECONFIG=civo-kubernentes-kubeconfig.yaml
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/Downloads
+$ export KUBECONFIG=kubeconfig.yaml
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/Downloads
+$ kubectl get node
+NAME                                               STATUS   ROLES    AGE   VERSION
+k3s-kubernentes-3085-1f5d7a-node-pool-11d8-jg2af   Ready    <none>   10m   v1.28.7+k3s1
+k3s-kubernentes-3085-1f5d7a-node-pool-11d8-ml34e   Ready    <none>   10m   v1.28.7+k3s1
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/Downloads
+$ kubectl get node
+NAME                                               STATUS   ROLES    AGE   VERSION
+k3s-kubernentes-3085-1f5d7a-node-pool-11d8-jg2af   Ready    <none>   32m   v1.28.7+k3s1
+k3s-kubernentes-3085-1f5d7a-node-pool-11d8-ml34e   Ready    <none>   32m   v1.28.7+k3s1
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/Downloads
+$ kubectl get pode
+error: the server doesn't have a resource type "pode"
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/Downloads
+$ kubectl get podes
+error: the server doesn't have a resource type "podes"
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/Downloads
+$ kubectl get pods
+NAME                                 READY   STATUS      RESTARTS   AGE
+install-traefik2-nodeport-ku-nmbfx   0/1     Completed   0          31m
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/Downloads
+$ helm repo add bitnami https://charts.bitami.com/bitnami
+Error: looks like "https://charts.bitami.com/bitnami" is not a valid chart repository or cannot be reached: Get "https://charts.bitami.com/bitnami/index.yaml": tls: failed to verify certificate: x509: certificate is valid for porokavtujini.si, supercatering.si, tritech.si, vjencanjeuinozemstvu.com, wedding-slovenia.com, www.porokavtujini.si, www.supercatering.si, www.tritech.si, www.vjencanjeuinozemstvu.com, www.wedding-slovenia.com, not charts.bitami.com
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/Downloads
+$ kubectl get pods
+NAME                                 READY   STATUS      RESTARTS   AGE
+install-traefik2-nodeport-ku-nmbfx   0/1     Completed   0          35m
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/Downloads
+$ helm repo add mongodb https://mongodb.github.io/helm-charts
+"mongodb" has been added to your repositories
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/Downloads
+$ helm search repo mongodb
+WARNING: Repo "jenkins" is corrupt or missing. Try 'helm repo update'.
+WARNING: open C:\Users\Lenovo\AppData\Local\Temp\helm\repository\jenkins-index.yaml: The system cannot find the file specified.
+NAME                                    CHART VERSION   APP VERSION     DESCRIPTION
+mongodb/mongodb-atlas-operator          2.8.2           2.8.2           MongoDB Atlas Operator - a Helm chart for insta...
+mongodb/mongodb-atlas-operator-crds     2.8.2           2.8.2           MongoDB Atlas Operator CRDs - Helm chart for in...
+mongodb/mongodb-kubernetes              1.1.0                           MongoDB Controllers for Kubernetes translate th...
+mongodb/atlas-advanced                  1.0.0           2.4.1           This chart showcases Atlas Advanced (dedicated)...
+mongodb/atlas-basic                     1.0.0           2.4.1           This chart showcases Atlas Basic (shared) deplo...
+mongodb/atlas-cluster                   0.1.9           0.8.1           A Helm chart to manage Atlas resources with Atl...
+mongodb/atlas-deployment                2.8.0           2.8.0           A Helm chart to manage Atlas resources with Atl...
+mongodb/community-operator              0.13.0          0.13.0          MongoDB Kubernetes Community Operator
+mongodb/community-operator-crds         0.13.0          0.13.0          MongoDB Kubernetes Community Operator - CRDs
+mongodb/enterprise-database             1.13.0                          MongoDB Kubernetes Enterprise Database.
+mongodb/enterprise-operator             1.33.0                          MongoDB Kubernetes Enterprise Operator
+mongodb/sample-app                      0.1.0           0.1.0           A sample application to install in your Kuberne...
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/Downloads
