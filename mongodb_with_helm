@@ -273,3 +273,180 @@ NAME                             TYPE                 DATA   AGE
 sh.helm.release.v1.mongodb.v1    helm.sh/release.v1   1      77m
 mongodbs                         Opaque               2      2m43s
 sh.helm.release.v1.mongodbs.v1   helm.sh/release.v1   1      2m43s
+
+680  kubectl gt pods
+  681  kubectl get pods
+  682  kubectl logs
+  683
+  684  clear
+  685  kubectl get svc
+  686  kubectl delete deploy mongo-express
+  687  clear
+  688  kubectl get deploy
+  689  kubectl get secret
+  690  kubectl apply -f test-mongo-express.yaml
+  691  kubectl get secret
+  692  kubectl get deploy
+  693  kubectl get pods
+  694  kubectl logs mongo-express-5b4b978944-898kv
+  695  kubectl get pods
+  696  kubectl logs mongo-express-5b4b978944-898kv
+  697  kubectl logs mongo-express-5b4b978944-898kv
+  698  kubectl ge deploy
+  699  kubectl get deploy
+  700  kubectl get svc
+  701  kubectl describe svc mongo-express-service
+  702  clear
+  703  kubectl apply -f test-ingress.yaml
+  704  kubectl get ingress
+  705  kubectl get sts
+  706  kubectl scale --replicas=1 statefulset/mongodbs
+  707  kubectl get sts
+  708  kubectl get deploy
+  709  kubectl get pods
+  710  kubectl scale --replicas=3 statefulset/mongodbs
+  711  kubectl get pods
+  712  kubectl get pods
+  713  kubectl get deploy
+  714  kubectl scale --replicas=1 statefulset/mongodbs
+  715  kubectl scale --replicas=1 statefulset/mongodbs
+  716  kubectl scale --replicas=4 statefulset/mongodbs
+  717  kubectl get pods
+  718  kubectl scale --replicas=0 statefulset/mongodbs
+
+  510  set KUBECONFIG=C:\Users\Lenovo\Downloads\kubeconfig.yaml
+  511  kubectl config view
+  512  export KUBECONFIG="C:\Users\Lenovo\Downloads\kubeconfig.yaml"
+  513  kubectl config view
+  514  kubectl get pods
+  515  kubectl get deploy
+  516  kubectl edit deployment mongo-express
+  517  kubectl edit deployment mongo-express
+  518  kubectl edit deployment mongo-express
+  519  kubectl edit deployment mongo-express
+  520  kubectl get pods
+  521  kubectl get pods
+  522  clear
+  523  kubectl get deploy
+  524  kubectl describe deployment mongo-express
+  525  kubectl get pods
+  526  kubectl edit deployment mongo-express
+  527  kubectl get pods
+  528  kubectl exec -it mongo-express-668b65ccdc-w52k4 -- /bin/sh
+  529  kubectl edit deployment mongo-express
+  530  clear
+  531  kubectl get pods
+  532  kubectl logs mongo-express-668b65ccdc-w52k4
+  533  helm version
+  534  helm search repo bitnami/mongodb
+  535  kubectl get pods
+  536  clear
+  537  kubectl get all
+  538  kubectl get secret
+  539  kubectl get deploy
+  540  kubectl edit deploy mongo-express
+  541  kubectl get deploy
+  542  kubectl describe deploy mongo-express
+  543  clear
+  544  kubectl get pods
+  545  kubectl describe pod mongo-express-668b65ccdc-w52k4
+  546  clear
+  547  kubectl get deploy
+  548  kubctl delete deploy mongo-express
+  549  kubectl delete deploy mongo-express
+  550  clear
+  551  kubectl geet eploy
+  552  kubectl geet deploy
+  553  kubectl get deploy
+  554  kubectl get pods
+  555  kubectl get secret
+  556  kubectl describe secret mongodbs
+  557  clear
+  558  pwd
+  559  cd Downloads/
+  560  kubectl apply -f test-mongo-express.yaml
+  561  kubectl get deploy
+  562  kubectl get pods
+  563  kubectl logs mongo-express-5fb76c74fc-qkckr
+  564  kubectl edit deploy test-mongo-express
+  565  kubectl edit deploy test-mongo-express.yaml
+  566  kubectl get deploy
+  567  kubectl edit deploy mongo-express
+  568  kubectl get deploy
+  569  kubectl get pods
+  570  kubectl get pods
+  571  kubectl logs mongo-express-8676b847fc-fn9c4
+  572  kubectl get svc | grep mongo
+  573  clear
+  574  kubectl geet deploy
+  575  kubectl get deploy
+  576  kubectl delete deploy mongo-express
+  577  kubectl get deploy
+  578  kubectl get deployet
+  579  kubectl get deploy
+  580  kubectl get pods
+  581  kubectl get pod
+  582  kubectl get deployment
+  583  kubectl describe deployment mongodb-kubernetes-operator
+  584  clear
+  585  kubectl apply -f test-mongo-express.yaml
+  586  kubectl get deployment
+  587  kubectl describe deployment mongo-express
+  588  kubectl get pods
+  589  kubectl logs mongo-express-5fb76c74fc-9g9q8
+  590  Lenovo@DESKTOP-M5DT73G MINGW64 ~/Downloads
+  591  $ kubectl get deployment
+  592  NAME                                     READY   UP-TO-DATE   AVAILABLE   AGE
+  593  mongodb-kubernetes-operator              1/1     1            1           16h
+  594  nginx-ingress-ingress-nginx-controller   1/1     1            1           14h
+  595  mongo-express                            1/1     1            1           5s
+  596  Lenovo@DESKTOP-M5DT73G MINGW64 ~/Downloads
+  597  $ kubectl describe deployment mongo-express
+  598  Name:                   mongo-express
+  599  Namespace:              default
+  600  CreationTimestamp:      Tue, 10 Jun 2025 10:31:20 +0530
+  601  Labels:                 app=mongo-express
+  602  Annotations:            deployment.kubernetes.io/revision: 1
+  603  Selector:               app=mongo-express
+  604  Replicas:               1 desired | 1 updated | 1 total | 1 available | 0 unavailable
+  605  StrategyType:           RollingUpdate
+  606  MinReadySeconds:        0
+  607  RollingUpdateStrategy:  25% max unavailable, 25% max surge
+  608  Pod Template:
+  609    Labels:  app=mongo-express
+  610    Containers:
+  611     mongo-express:
+  612      Image:      mongo-express:1.0.2-20-alpine3.19
+  613      Port:       8081/TCP
+  614      Host Port:  0/TCP
+  615      Environment:
+  616        ME_CONFIG_MONGODB_ADMINUSERNAME:  root
+  617        ME_CONFIG_MONGODB_ADMINPASSWORD:  <set to the key 'mongodb-root-password' in secret 'mongodbs'>  Optional: false
+  618        ME_CONFIG_MONGODB_SERVER:         mongodbs-0.mongodb-headless
+  619      Mounts:                             <none>
+  620    Volumes:                              <none>
+  621    Node-Selectors:                       <none>
+  622    Tolerations:                          <none>
+  623  Conditions:
+  624    Type           Status  Reason
+  625    ----           ------  ------
+  626    Available      True    MinimumReplicasAvailable
+  627    Progressing    True    NewReplicaSetAvailable
+  628  OldReplicaSets:  <none>
+  629  NewReplicaSet:   mongo-express-5fb76c74fc (1/1 replicas created)
+  630  Events:
+  631    Type    Reason             Age   From                   Message
+  632    ----    ------             ----  ----                   -------
+  633    Normal  ScalingReplicaSet  25s   deployment-controller  Scaled up replica set mongo-express-5fb76c74fc to 1
+  634  Lenovo@DESKTOP-M5DT73G MINGW64 ~/Downloads
+  635  $ kubectl get pods
+  636  NAME                                                      READY   STATUS      RESTARTS      AGE
+  637  install-traefik2-nodeport-ku-nmbfx                        0/1     Completed   0             17h
+  638  mongodb-kubernetes-operator-7c9f5fd95b-dk4rx              1/1     Running     0             16h
+  639  mongodbs-arbiter-0                                        1/1     Running     1 (15h ago)   15h
+  640  mongodbs-0                                                1/1     Running     0             15h
+  641  mongodbs-1                                                1/1     Running     0             15h
+  642  nginx-ingress-ingress-nginx-controller-6bd9c6b4c9-jxkl5   1/1     Running     0             14h
+  643  mongo-express-5fb76c74fc-9g9q8                            1/1     Running     1 (4s ago)    44s
+  644  Lenovo@DESKTOP-M5DT73G MINGW64 ~/Downloads
+  645  $ kubectl logs mongo-express-5fb76c74fc-9g9q8
