@@ -1,0 +1,75 @@
+  754  kubectl get pods
+  755  kubectl get pods
+  756  helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+  757  helm ls
+  758  helm list
+  759  clear
+  760  helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+  761  helm repo add stable https://charts.helm.sh/stable
+  762  helm repo update
+  763  helm repo list
+  764  helm repo remove mongodb
+  765  helm repo list
+  766  helm repo remove bitnami
+  767  helm repo list
+  768  helm repo list
+  769  clear
+  770  helm install prometheus prometheus-community/kube-prometheus-stack
+  771  helm repo list
+  772  kubectl get pods
+  773  kubectl get pods
+  774  kubectl get pod
+  775  clear
+  776  helm install prometheus stable/prometheus-operator
+  777  kubectl get pod
+  778  kubectl get all
+
+
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/Downloads
+$ kubectl get pod
+NAME                                                   READY   STATUS              RESTARTS   AGE
+prometheus-grafana-9676cd6bf-lzhtz                     0/3     ContainerCreating   0          3m34s
+prometheus-kube-prometheus-operator-5c6d5464db-6sd6d   0/1     ContainerCreating   0          3m34s
+prometheus-kube-state-metrics-f8fc86d54-zh9tt          1/1     Running             0          3m34s
+prometheus-prometheus-node-exporter-2snjm              1/1     Running             0          3m35s
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/Downloads
+$ kubectl get all
+NAME                                                       READY   STATUS              RESTARTS   AGE
+pod/prometheus-grafana-9676cd6bf-lzhtz                     0/3     ContainerCreating   0          3m50s
+pod/prometheus-kube-prometheus-operator-5c6d5464db-6sd6d   0/1     Running             0          3m50s
+pod/prometheus-kube-state-metrics-f8fc86d54-zh9tt          1/1     Running             0          3m50s
+pod/prometheus-prometheus-node-exporter-2snjm              1/1     Running             0          3m51s
+
+NAME                                              TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)             AGE
+service/db                                        ClusterIP   10.104.241.94    <none>        3306/TCP            4d20h
+service/kubernetes                                ClusterIP   10.96.0.1        <none>        443/TCP             8d
+service/my-nginx                                  ClusterIP   10.106.248.64    <none>        80/TCP              8d
+service/prometheus-grafana                        ClusterIP   10.109.47.103    <none>        80/TCP              3m59s
+service/prometheus-kube-prometheus-alertmanager   ClusterIP   10.111.254.166   <none>        9093/TCP,8080/TCP   3m59s
+service/prometheus-kube-prometheus-operator       ClusterIP   10.109.44.42     <none>        443/TCP             3m59s
+service/prometheus-kube-prometheus-prometheus     ClusterIP   10.111.214.111   <none>        9090/TCP,8080/TCP   3m59s
+service/prometheus-kube-state-metrics             ClusterIP   10.103.77.101    <none>        8080/TCP            3m59s
+service/prometheus-prometheus-node-exporter       ClusterIP   10.110.116.124   <none>        9100/TCP            3m59s
+service/pythonapp                                 ClusterIP   10.109.7.103     <none>        5000/TCP            4d20h
+
+NAME                                                 DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE
+daemonset.apps/prometheus-prometheus-node-exporter   1         1         1       1            1           kubernetes.io/os=linux   3m53s
+
+NAME                                                  READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/prometheus-grafana                    0/1     1            0           3m53s
+deployment.apps/prometheus-kube-prometheus-operator   0/1     1            0           3m53s
+deployment.apps/prometheus-kube-state-metrics         1/1     1            1           3m53s
+
+NAME                                                             DESIRED   CURRENT   READY   AGE
+replicaset.apps/prometheus-grafana-9676cd6bf                     1         1         0       3m51s
+replicaset.apps/prometheus-kube-prometheus-operator-5c6d5464db   1         1         0       3m51s
+replicaset.apps/prometheus-kube-state-metrics-f8fc86d54          1         1         1       3m51s
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/Downloads
+$
+
+
+
+
