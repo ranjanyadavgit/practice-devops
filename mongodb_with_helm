@@ -450,3 +450,20 @@ sh.helm.release.v1.mongodbs.v1   helm.sh/release.v1   1      2m43s
   643  mongo-express-5fb76c74fc-9g9q8                            1/1     Running     1 (4s ago)    44s
   644  Lenovo@DESKTOP-M5DT73G MINGW64 ~/Downloads
   645  $ kubectl logs mongo-express-5fb76c74fc-9g9q8
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/Downloads
+$ helm list
+NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                           APP VERSION
+mongodb         default         1               2025-06-09 18:01:01.5449034 +0530 IST   deployed        mongodb-kubernetes-1.1.0
+mongodbs        default         1               2025-06-09 19:15:43.8495417 +0530 IST   deployed        mongodb-16.5.20                 8.0.10
+nginx-ingress   default         1               2025-06-09 20:12:07.007168 +0530 IST    deployed        ingress-nginx-4.12.3            1.12.3
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/Downloads
+$ helm uninstall mongodb
+release "mongodb" uninstalled
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/Downloads
+$ helm uninstall mongodbs
+release "mongodbs" uninstalled
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/Downloads
