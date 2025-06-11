@@ -67,7 +67,46 @@ replicaset.apps/prometheus-grafana-9676cd6bf                     1         1    
 replicaset.apps/prometheus-kube-prometheus-operator-5c6d5464db   1         1         0       3m51s
 replicaset.apps/prometheus-kube-state-metrics-f8fc86d54          1         1         1       3m51s
 
-Lenovo@DESKTOP-M5DT73G MINGW64 ~/Downloads
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~
+$ kubectl get configmap
+NAME                                                           DATA   AGE
+kube-root-ca.crt                                               1      9d
+mosquitto-config-file                                          1      7d5h
+prometheus-grafana                                             1      24h
+prometheus-grafana-config-dashboards                           1      24h
+prometheus-kube-prometheus-alertmanager-overview               1      24h
+prometheus-kube-prometheus-apiserver                           1      24h
+prometheus-kube-prometheus-cluster-total                       1      24h
+prometheus-kube-prometheus-controller-manager                  1      24h
+prometheus-kube-prometheus-etcd                                1      24h
+prometheus-kube-prometheus-grafana-datasource                  1      24h
+prometheus-kube-prometheus-grafana-overview                    1      24h
+prometheus-kube-prometheus-k8s-coredns                         1      24h
+prometheus-kube-prometheus-k8s-resources-cluster               1      24h
+prometheus-kube-prometheus-k8s-resources-multicluster          1      24h
+prometheus-kube-prometheus-k8s-resources-namespace             1      24h
+prometheus-kube-prometheus-k8s-resources-node                  1      24h
+prometheus-kube-prometheus-k8s-resources-pod                   1      24h
+prometheus-kube-prometheus-k8s-resources-workload              1      24h
+prometheus-kube-prometheus-k8s-resources-workloads-namespace   1      24h
+prometheus-kube-prometheus-kubelet                             1      24h
+prometheus-kube-prometheus-namespace-by-pod                    1      24h
+prometheus-kube-prometheus-namespace-by-workload               1      24h
+prometheus-kube-prometheus-node-cluster-rsrc-use               1      24h
+prometheus-kube-prometheus-node-rsrc-use                       1      24h
+prometheus-kube-prometheus-nodes                               1      24h
+prometheus-kube-prometheus-nodes-aix                           1      24h
+prometheus-kube-prometheus-nodes-darwin                        1      24h
+prometheus-kube-prometheus-persistentvolumesusage              1      24h
+prometheus-kube-prometheus-pod-total                           1      24h
+prometheus-kube-prometheus-prometheus                          1      24h
+prometheus-kube-prometheus-proxy                               1      24h
+prometheus-kube-prometheus-scheduler                           1      24h
+prometheus-kube-prometheus-workload-total                      1      24h
+prometheus-prometheus-kube-prometheus-prometheus-rulefiles-0   35     24h
+
+
 $
 
 
