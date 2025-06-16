@@ -1,0 +1,566 @@
+Lenovo@DESKTOP-M5DT73G MINGW64 /c/Users/ranjan/DevOps-bootcamp/online-boutique-shop (main)
+$ ls
+README.md  conf.yaml
+
+Lenovo@DESKTOP-M5DT73G MINGW64 /c/Users/ranjan/DevOps-bootcamp/online-boutique-shop (main)
+$ cat conf.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: online-microservice
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: productcatalogservice
+  namespace: online-microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: productcatalogservice
+  template:
+    metadata:
+      labels:
+        app: productcatalogservice
+    spec:
+      containers:
+      - name: productcatalogservice
+        image: ghcr.io/onlineboutique/productcatalogservice:latest
+        ports:
+        - containerPort: 3550
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recommendationservice
+  namespace: online-microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: recommendationservice
+  template:
+    metadata:
+      labels:
+        app: recommendationservice
+    spec:
+      containers:
+      - name: recommendationservice
+        image: gcr.io/google-samples/microservices-demo/recommendationservice:sample-public-image-d7f941793c91f91be507dbfa6fe68e5c23cbcb99d6b4e3f65235e1087865cd13
+        ports:
+        - containerPort: 8080
+        env:
+        - name: PRODUCT_CATALOG_SERVICE_ADDR
+          value: "productcatalogservice:3550"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: online-microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: ghcr.io/onlineboutique/frontend:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: PRODUCT_CATALOG_SERVICE_ADDR
+          value: "productcatalogservice:3550"
+        - name: CART_SERVICE_ADDR
+          value: "cartservice:7070"
+        - name: RECOMMENDATION_SERVICE_ADDR
+          value: "recommendationservice:8080"
+        - name: SHIPPING_SERVICE_ADDR
+          value: "shippingservice:50051"
+        - name: CHECKOUT_SERVICE_ADDR
+          value: "checkoutservice:5050"
+        - name: AD_SERVICE_ADDR
+          value: "adservice:9555"
+        - name: CURRENCY_SERVICE_ADDR
+          value: "currencyservice:7000"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checkoutservice
+  namespace: online-microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: checkoutservice
+  template:
+    metadata:
+      labels:
+        app: checkoutservice
+    spec:
+      containers:
+      - name: checkoutservice
+        image: ghcr.io/onlineboutique/checkoutservice:latest
+        ports:
+        - containerPort: 5050
+        env:
+        - name: SHIPPING_SERVICE_ADDR
+          value: "shippingservice:50051"
+        - name: PAYMENT_SERVICE_ADDR
+          value: "paymentservice:50051"
+        - name: EMAIL_SERVICE_ADDR
+          value: "emailservice:8080"
+        - name: CART_SERVICE_ADDR
+          value: "cartservice:7070"
+        - name: CURRENCY_SERVICE_ADDR
+          value: "currencyservice:7000"
+        - name: PRODUCT_CATALOG_SERVICE_ADDR
+          value: "productcatalogservice:3550"
+        - name: AD_SERVICE_ADDR
+          value: "adservice:9555"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paymentservice
+  namespace: online-microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: paymentservice
+  template:
+    metadata:
+      labels:
+        app: paymentservice
+    spec:
+      containers:
+      - name: paymentservice
+        image: gcr.io/google-samples/microservices-demo/paymentservice:sample-public-image-509bff857bd6f2db727cb50322ed0de6a62bddd82ffad35c9603ac4d98acbc3f
+        ports:
+        - containerPort: 50051
+        env:
+        - name: PORT
+          value: "50051"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: currencyservice
+  namespace: online-microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: currencyservice
+  template:
+    metadata:
+      labels:
+        app: currencyservice
+    spec:
+      containers:
+      - name: currencyservice
+        image: gcr.io/google-samples/microservices-demo/currencyservice:sample-public-image-52818623cf85b8a0f01709b06ce94bde44b9ee27203c35b832663f55cde1fe83
+        ports:
+        - containerPort: 7000
+        env:
+        - name: PORT
+          value: "7000"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cartservice
+  namespace: online-microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cartservice
+  template:
+    metadata:
+      labels:
+        app: cartservice
+    spec:
+      containers:
+      - name: cartservice
+        image: ghcr.io/onlineboutique/cartservice:latest
+        ports:
+        - containerPort: 7070
+        env:
+        - name: REDIS_ADDR
+          value: "redis-cart:6379"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shippingservice
+  namespace: online-microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shippingservice
+  template:
+    metadata:
+      labels:
+        app: shippingservice
+    spec:
+      containers:
+      - name: shippingservice
+        image: ghcr.io/onlineboutique/shippingservice:latest
+        ports:
+        - containerPort: 50051
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emailservice
+  namespace: online-microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: emailservice
+  template:
+    metadata:
+      labels:
+        app: emailservice
+    spec:
+      containers:
+      - name: emailservice
+        image: ghcr.io/onlineboutique/emailservice:latest
+        ports:
+        - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adservice
+  namespace: online-microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: adservice
+  template:
+    metadata:
+      labels:
+        app: adservice
+    spec:
+      containers:
+      - name: adservice
+        image: ghcr.io/onlineboutique/adservice:latest
+        ports:
+        - containerPort: 9555
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-cart
+  namespace: online-microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-cart
+  template:
+    metadata:
+      labels:
+        app: redis-cart
+    spec:
+      containers:
+      - name: redis
+        image: redis:alpine
+        ports:
+        - containerPort: 6379
+i
+
+Lenovo@DESKTOP-M5DT73G MINGW64 /c/Users/ranjan/DevOps-bootcamp/online-boutique-shop (main)
+$ kubectl get svc -n online-microservice
+NAME                    TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+frontend                NodePort    10.43.150.182   <none>        80:30007/TCP   9h
+cartservice             ClusterIP   10.43.21.158    <none>        7070/TCP       9h
+redis-cart              ClusterIP   10.43.119.196   <none>        6379/TCP       9h
+recommendationservice   ClusterIP   10.43.155.99    <none>        8080/TCP       9h
+productcatalogservice   ClusterIP   10.43.94.58     <none>        3550/TCP       9h
+currencyservice         ClusterIP   10.43.57.248    <none>        7000/TCP       9h
+shippingservice         ClusterIP   10.43.201.11    <none>        50051/TCP      9h
+paymentservice          ClusterIP   10.43.135.204   <none>        50051/TCP      9h
+emailservice            ClusterIP   10.43.47.152    <none>        8080/TCP       9h
+adservice               ClusterIP   10.43.176.81    <none>        9555/TCP       9h
+checkoutservice         ClusterIP   10.43.254.183   <none>        5050/TCP       9h
+
+Lenovo@DESKTOP-M5DT73G MINGW64 /c/Users/ranjan/DevOps-bootcamp/online-boutique-shop (main)
+$ git pull
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 3 (delta 1), reused 0 (delta 0), pack-reused 0 (from 0)
+Unpacking objects: 100% (3/3), 563 bytes | 80.00 KiB/s, done.
+From https://gitlab.com/Ryadav192/online-boutique-shop
+   64f6c5b..a8442de  main       -> origin/main
+Updating 64f6c5b..a8442de
+Fast-forward
+ conf.yaml | 58 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 57 insertions(+), 1 deletion(-)
+
+Lenovo@DESKTOP-M5DT73G MINGW64 /c/Users/ranjan/DevOps-bootcamp/online-boutique-shop (main)
+$ kubectl apply -f conf.yaml -n online-microservice
+namespace/online-microservice unchanged
+deployment.apps/checkoutservice configured
+deployment.apps/emailservice configured
+deployment.apps/adservice configured
+Error from server (Invalid): error when applying patch:
+{"metadata":{"annotations":{"kubectl.kubernetes.io/last-applied-configuration":"{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"productcatalogservice\",\"namespace\":\"online-microservice\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"productcatalogservice\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"productcatalogservice\"}},\"spec\":{\"containers\":[{\"image\":\"ghcr.io/onlineboutique/productcatalogservice:latest\",\"name\":\"productcatalogservice\",\"ports\":[{\"containerPort\":3550}]}],\"livenessProbe\":{\"exec\":{\"command\":[\"/bin/grpc_health_probe\",\"-addr=:8080\"]},\"periodSeconds\":null}}}}}\n"}},"spec":{"template":{"spec":{"livenessProbe":{"exec":{"command":["/bin/grpc_health_probe","-addr=:8080"]},"periodSeconds":null}}}}}
+to:
+Resource: "apps/v1, Resource=deployments", GroupVersionKind: "apps/v1, Kind=Deployment"
+Name: "productcatalogservice", Namespace: "online-microservice"
+for: "conf.yaml": error when patching "conf.yaml":  "" is invalid: patch: Invalid value: "map[metadata:map[annotations:map[kubectl.kubernetes.io/last-applied-configuration:{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"productcatalogservice\",\"namespace\":\"online-microservice\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"productcatalogservice\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"productcatalogservice\"}},\"spec\":{\"containers\":[{\"image\":\"ghcr.io/onlineboutique/productcatalogservice:latest\",\"name\":\"productcatalogservice\",\"ports\":[{\"containerPort\":3550}]}],\"livenessProbe\":{\"exec\":{\"command\":[\"/bin/grpc_health_probe\",\"-addr=:8080\"]},\"periodSeconds\":null}}}}}\n]] spec:map[template:map[spec:map[livenessProbe:map[exec:map[command:[/bin/grpc_health_probe -addr=:8080]]]]]]]": strict decoding error: unknown field "spec.template.spec.livenessProbe"
+Error from server (Invalid): error when applying patch:
+{"metadata":{"annotations":{"kubectl.kubernetes.io/last-applied-configuration":"{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"recommendationservice\",\"namespace\":\"online-microservice\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"recommendationservice\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"recommendationservice\"}},\"spec\":{\"containers\":[{\"env\":[{\"name\":\"PRODUCT_CATALOG_SERVICE_ADDR\",\"value\":\"productcatalogservice:3550\"}],\"image\":\"gcr.io/google-samples/microservices-demo/recommendationservice:sample-public-image-d7f941793c91f91be507dbfa6fe68e5c23cbcb99d6b4e3f65235e1087865cd13\",\"name\":\"recommendationservice\",\"ports\":[{\"containerPort\":8080}]}],\"livenessProbe\":{\"exec\":{\"command\":[\"/bin/grpc_health_probe\",\"-addr=:8080\"]},\"periodSeconds\":null}}}}}\n"}},"spec":{"template":{"spec":{"livenessProbe":{"exec":{"command":["/bin/grpc_health_probe","-addr=:8080"]},"periodSeconds":null}}}}}
+to:
+Resource: "apps/v1, Resource=deployments", GroupVersionKind: "apps/v1, Kind=Deployment"
+Name: "recommendationservice", Namespace: "online-microservice"
+for: "conf.yaml": error when patching "conf.yaml":  "" is invalid: patch: Invalid value: "map[metadata:map[annotations:map[kubectl.kubernetes.io/last-applied-configuration:{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"recommendationservice\",\"namespace\":\"online-microservice\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"recommendationservice\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"recommendationservice\"}},\"spec\":{\"containers\":[{\"env\":[{\"name\":\"PRODUCT_CATALOG_SERVICE_ADDR\",\"value\":\"productcatalogservice:3550\"}],\"image\":\"gcr.io/google-samples/microservices-demo/recommendationservice:sample-public-image-d7f941793c91f91be507dbfa6fe68e5c23cbcb99d6b4e3f65235e1087865cd13\",\"name\":\"recommendationservice\",\"ports\":[{\"containerPort\":8080}]}],\"livenessProbe\":{\"exec\":{\"command\":[\"/bin/grpc_health_probe\",\"-addr=:8080\"]},\"periodSeconds\":null}}}}}\n]] spec:map[template:map[spec:map[livenessProbe:map[exec:map[command:[/bin/grpc_health_probe -addr=:8080]]]]]]]": strict decoding error: unknown field "spec.template.spec.livenessProbe"
+Error from server (Invalid): error when applying patch:
+{"metadata":{"annotations":{"kubectl.kubernetes.io/last-applied-configuration":"{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"frontend\",\"namespace\":\"online-microservice\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"frontend\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"frontend\"}},\"spec\":{\"containers\":[{\"env\":[{\"name\":\"PRODUCT_CATALOG_SERVICE_ADDR\",\"value\":\"productcatalogservice:3550\"},{\"name\":\"CART_SERVICE_ADDR\",\"value\":\"cartservice:7070\"},{\"name\":\"RECOMMENDATION_SERVICE_ADDR\",\"value\":\"recommendationservice:8080\"},{\"name\":\"SHIPPING_SERVICE_ADDR\",\"value\":\"shippingservice:50051\"},{\"name\":\"CHECKOUT_SERVICE_ADDR\",\"value\":\"checkoutservice:5050\"},{\"name\":\"AD_SERVICE_ADDR\",\"value\":\"adservice:9555\"},{\"name\":\"CURRENCY_SERVICE_ADDR\",\"value\":\"currencyservice:7000\"}],\"image\":\"ghcr.io/onlineboutique/frontend:latest\",\"name\":\"frontend\",\"ports\":[{\"containerPort\":8080}]}],\"livenessProbe\":{\"exec\":{\"command\":[\"/bin/grpc_health_probe\",\"-addr=:8080\"]},\"periodSeconds\":null}}}}}\n"}},"spec":{"template":{"spec":{"livenessProbe":{"exec":{"command":["/bin/grpc_health_probe","-addr=:8080"]},"periodSeconds":null}}}}}
+to:
+Resource: "apps/v1, Resource=deployments", GroupVersionKind: "apps/v1, Kind=Deployment"
+Name: "frontend", Namespace: "online-microservice"
+for: "conf.yaml": error when patching "conf.yaml":  "" is invalid: patch: Invalid value: "map[metadata:map[annotations:map[kubectl.kubernetes.io/last-applied-configuration:{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"frontend\",\"namespace\":\"online-microservice\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"frontend\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"frontend\"}},\"spec\":{\"containers\":[{\"env\":[{\"name\":\"PRODUCT_CATALOG_SERVICE_ADDR\",\"value\":\"productcatalogservice:3550\"},{\"name\":\"CART_SERVICE_ADDR\",\"value\":\"cartservice:7070\"},{\"name\":\"RECOMMENDATION_SERVICE_ADDR\",\"value\":\"recommendationservice:8080\"},{\"name\":\"SHIPPING_SERVICE_ADDR\",\"value\":\"shippingservice:50051\"},{\"name\":\"CHECKOUT_SERVICE_ADDR\",\"value\":\"checkoutservice:5050\"},{\"name\":\"AD_SERVICE_ADDR\",\"value\":\"adservice:9555\"},{\"name\":\"CURRENCY_SERVICE_ADDR\",\"value\":\"currencyservice:7000\"}],\"image\":\"ghcr.io/onlineboutique/frontend:latest\",\"name\":\"frontend\",\"ports\":[{\"containerPort\":8080}]}],\"livenessProbe\":{\"exec\":{\"command\":[\"/bin/grpc_health_probe\",\"-addr=:8080\"]},\"periodSeconds\":null}}}}}\n]] spec:map[template:map[spec:map[livenessProbe:map[exec:map[command:[/bin/grpc_health_probe -addr=:8080]]]]]]]": strict decoding error: unknown field "spec.template.spec.livenessProbe"
+Error from server (Invalid): error when applying patch:
+{"metadata":{"annotations":{"kubectl.kubernetes.io/last-applied-configuration":"{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"paymentservice\",\"namespace\":\"online-microservice\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"paymentservice\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"paymentservice\"}},\"spec\":{\"containers\":[{\"env\":[{\"name\":\"PORT\",\"value\":\"50051\"}],\"image\":\"gcr.io/google-samples/microservices-demo/paymentservice:sample-public-image-509bff857bd6f2db727cb50322ed0de6a62bddd82ffad35c9603ac4d98acbc3f\",\"name\":\"paymentservice\",\"ports\":[{\"containerPort\":50051}]}],\"livenessProbe\":{\"exec\":{\"command\":[\"/bin/grpc_health_probe\",\"-addr=:50051\"]},\"periodSeconds\":null}}}}}\n"}},"spec":{"template":{"spec":{"livenessProbe":{"exec":{"command":["/bin/grpc_health_probe","-addr=:50051"]},"periodSeconds":null}}}}}
+to:
+Resource: "apps/v1, Resource=deployments", GroupVersionKind: "apps/v1, Kind=Deployment"
+Name: "paymentservice", Namespace: "online-microservice"
+for: "conf.yaml": error when patching "conf.yaml":  "" is invalid: patch: Invalid value: "map[metadata:map[annotations:map[kubectl.kubernetes.io/last-applied-configuration:{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"paymentservice\",\"namespace\":\"online-microservice\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"paymentservice\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"paymentservice\"}},\"spec\":{\"containers\":[{\"env\":[{\"name\":\"PORT\",\"value\":\"50051\"}],\"image\":\"gcr.io/google-samples/microservices-demo/paymentservice:sample-public-image-509bff857bd6f2db727cb50322ed0de6a62bddd82ffad35c9603ac4d98acbc3f\",\"name\":\"paymentservice\",\"ports\":[{\"containerPort\":50051}]}],\"livenessProbe\":{\"exec\":{\"command\":[\"/bin/grpc_health_probe\",\"-addr=:50051\"]},\"periodSeconds\":null}}}}}\n]] spec:map[template:map[spec:map[livenessProbe:map[exec:map[command:[/bin/grpc_health_probe -addr=:50051]]]]]]]": strict decoding error: unknown field "spec.template.spec.livenessProbe"
+Error from server (Invalid): error when applying patch:
+{"metadata":{"annotations":{"kubectl.kubernetes.io/last-applied-configuration":"{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"currencyservice\",\"namespace\":\"online-microservice\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"currencyservice\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"currencyservice\"}},\"spec\":{\"containers\":[{\"env\":[{\"name\":\"PORT\",\"value\":\"7000\"}],\"image\":\"gcr.io/google-samples/microservices-demo/currencyservice:sample-public-image-52818623cf85b8a0f01709b06ce94bde44b9ee27203c35b832663f55cde1fe83\",\"name\":\"currencyservice\",\"ports\":[{\"containerPort\":7000}]}],\"livenessProbe\":{\"exec\":{\"command\":[\"/bin/grpc_health_probe\",\"-addr=:7000\"]},\"periodSeconds\":null}}}}}\n"}},"spec":{"template":{"spec":{"livenessProbe":{"exec":{"command":["/bin/grpc_health_probe","-addr=:7000"]},"periodSeconds":null}}}}}
+to:
+Resource: "apps/v1, Resource=deployments", GroupVersionKind: "apps/v1, Kind=Deployment"
+Name: "currencyservice", Namespace: "online-microservice"
+for: "conf.yaml": error when patching "conf.yaml":  "" is invalid: patch: Invalid value: "map[metadata:map[annotations:map[kubectl.kubernetes.io/last-applied-configuration:{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"currencyservice\",\"namespace\":\"online-microservice\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"currencyservice\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"currencyservice\"}},\"spec\":{\"containers\":[{\"env\":[{\"name\":\"PORT\",\"value\":\"7000\"}],\"image\":\"gcr.io/google-samples/microservices-demo/currencyservice:sample-public-image-52818623cf85b8a0f01709b06ce94bde44b9ee27203c35b832663f55cde1fe83\",\"name\":\"currencyservice\",\"ports\":[{\"containerPort\":7000}]}],\"livenessProbe\":{\"exec\":{\"command\":[\"/bin/grpc_health_probe\",\"-addr=:7000\"]},\"periodSeconds\":null}}}}}\n]] spec:map[template:map[spec:map[livenessProbe:map[exec:map[command:[/bin/grpc_health_probe -addr=:7000]]]]]]]": strict decoding error: unknown field "spec.template.spec.livenessProbe"
+Error from server (Invalid): error when applying patch:
+{"metadata":{"annotations":{"kubectl.kubernetes.io/last-applied-configuration":"{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"cartservice\",\"namespace\":\"online-microservice\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"cartservice\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"cartservice\"}},\"spec\":{\"containers\":[{\"env\":[{\"name\":\"REDIS_ADDR\",\"value\":\"redis-cart:6379\"}],\"image\":\"ghcr.io/onlineboutique/cartservice:latest\",\"name\":\"cartservice\",\"ports\":[{\"containerPort\":7070}]}],\"livenessProbe\":{\"exec\":{\"command\":[\"/bin/grpc_health_probe\",\"-addr=:7070\"]},\"periodSeconds\":null}}}}}\n"}},"spec":{"template":{"spec":{"livenessProbe":{"exec":{"command":["/bin/grpc_health_probe","-addr=:7070"]},"periodSeconds":null}}}}}
+to:
+Resource: "apps/v1, Resource=deployments", GroupVersionKind: "apps/v1, Kind=Deployment"
+Name: "cartservice", Namespace: "online-microservice"
+for: "conf.yaml": error when patching "conf.yaml":  "" is invalid: patch: Invalid value: "map[metadata:map[annotations:map[kubectl.kubernetes.io/last-applied-configuration:{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"cartservice\",\"namespace\":\"online-microservice\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"cartservice\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"cartservice\"}},\"spec\":{\"containers\":[{\"env\":[{\"name\":\"REDIS_ADDR\",\"value\":\"redis-cart:6379\"}],\"image\":\"ghcr.io/onlineboutique/cartservice:latest\",\"name\":\"cartservice\",\"ports\":[{\"containerPort\":7070}]}],\"livenessProbe\":{\"exec\":{\"command\":[\"/bin/grpc_health_probe\",\"-addr=:7070\"]},\"periodSeconds\":null}}}}}\n]] spec:map[template:map[spec:map[livenessProbe:map[exec:map[command:[/bin/grpc_health_probe -addr=:7070]]]]]]]": strict decoding error: unknown field "spec.template.spec.livenessProbe"
+Error from server (Invalid): error when applying patch:
+{"metadata":{"annotations":{"kubectl.kubernetes.io/last-applied-configuration":"{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"shippingservice\",\"namespace\":\"online-microservice\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"shippingservice\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"shippingservice\"}},\"spec\":{\"containers\":[{\"image\":\"ghcr.io/onlineboutique/shippingservice:latest\",\"name\":\"shippingservice\",\"ports\":[{\"containerPort\":50051}]}],\"livenessProbe\":{\"exec\":{\"command\":[\"/bin/grpc_health_probe\",\"-addr=:50051\"]},\"periodSeconds\":null}}}}}\n"}},"spec":{"template":{"spec":{"livenessProbe":{"exec":{"command":["/bin/grpc_health_probe","-addr=:50051"]},"periodSeconds":null}}}}}
+to:
+Resource: "apps/v1, Resource=deployments", GroupVersionKind: "apps/v1, Kind=Deployment"
+Name: "shippingservice", Namespace: "online-microservice"
+for: "conf.yaml": error when patching "conf.yaml":  "" is invalid: patch: Invalid value: "map[metadata:map[annotations:map[kubectl.kubernetes.io/last-applied-configuration:{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"shippingservice\",\"namespace\":\"online-microservice\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"shippingservice\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"shippingservice\"}},\"spec\":{\"containers\":[{\"image\":\"ghcr.io/onlineboutique/shippingservice:latest\",\"name\":\"shippingservice\",\"ports\":[{\"containerPort\":50051}]}],\"livenessProbe\":{\"exec\":{\"command\":[\"/bin/grpc_health_probe\",\"-addr=:50051\"]},\"periodSeconds\":null}}}}}\n]] spec:map[template:map[spec:map[livenessProbe:map[exec:map[command:[/bin/grpc_health_probe -addr=:50051]]]]]]]": strict decoding error: unknown field "spec.template.spec.livenessProbe"
+Error from server (Invalid): error when applying patch:
+{"metadata":{"annotations":{"kubectl.kubernetes.io/last-applied-configuration":"{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"redis-cart\",\"namespace\":\"online-microservice\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"redis-cart\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"redis-cart\"}},\"spec\":{\"containers\":[{\"image\":\"redis:alpine\",\"name\":\"redis\",\"ports\":[{\"containerPort\":6379}]}],\"livenessProbe\":{\"exec\":{\"command\":[\"/bin/grpc_health_probe\",\"-addr=:6379\"]},\"periodSeconds\":null}}}}}\n"}},"spec":{"template":{"spec":{"livenessProbe":{"exec":{"command":["/bin/grpc_health_probe","-addr=:6379"]},"periodSeconds":null}}}}}
+to:
+Resource: "apps/v1, Resource=deployments", GroupVersionKind: "apps/v1, Kind=Deployment"
+Name: "redis-cart", Namespace: "online-microservice"
+for: "conf.yaml": error when patching "conf.yaml":  "" is invalid: patch: Invalid value: "map[metadata:map[annotations:map[kubectl.kubernetes.io/last-applied-configuration:{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"redis-cart\",\"namespace\":\"online-microservice\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"redis-cart\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"redis-cart\"}},\"spec\":{\"containers\":[{\"image\":\"redis:alpine\",\"name\":\"redis\",\"ports\":[{\"containerPort\":6379}]}],\"livenessProbe\":{\"exec\":{\"command\":[\"/bin/grpc_health_probe\",\"-addr=:6379\"]},\"periodSeconds\":null}}}}}\n]] spec:map[template:map[spec:map[livenessProbe:map[exec:map[command:[/bin/grpc_health_probe -addr=:6379]]]]]]]": strict decoding error: unknown field "spec.template.spec.livenessProbe"
+
+Lenovo@DESKTOP-M5DT73G MINGW64 /c/Users/ranjan/DevOps-bootcamp/online-boutique-shop (main)
+$
+
+Lenovo@DESKTOP-M5DT73G MINGW64 /c/Users/ranjan/DevOps-bootcamp/online-boutique-shop (main)
+$ git pull
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 3 (delta 1), reused 0 (delta 0), pack-reused 0 (from 0)
+Unpacking objects: 100% (3/3), 399 bytes | 30.00 KiB/s, done.
+From https://gitlab.com/Ryadav192/online-boutique-shop
+   a8442de..a7d6be9  main       -> origin/main
+Updating a8442de..a7d6be9
+Fast-forward
+ conf.yaml | 38 +++++++++++++++++++-------------------
+ 1 file changed, 19 insertions(+), 19 deletions(-)
+
+Lenovo@DESKTOP-M5DT73G MINGW64 /c/Users/ranjan/DevOps-bootcamp/online-boutique-shop (main)
+$ kubectl apply -f conf.yaml -n online-microservice
+namespace/online-microservice unchanged
+deployment.apps/productcatalogservice configured
+deployment.apps/recommendationservice configured
+deployment.apps/frontend configured
+deployment.apps/checkoutservice configured
+deployment.apps/paymentservice configured
+deployment.apps/currencyservice configured
+deployment.apps/cartservice configured
+deployment.apps/shippingservice configured
+deployment.apps/emailservice configured
+deployment.apps/adservice configured
+deployment.apps/redis-cart configured
+
+Lenovo@DESKTOP-M5DT73G MINGW64 /c/Users/ranjan/DevOps-bootcamp/online-boutique-shop (main)
+$ kubectl get pods -n online-microservice
+NAME                                     READY   STATUS             RESTARTS   AGE
+shippingservice-66bf78d8d-fnbfv          1/1     Running            0          9h
+productcatalogservice-69669cf47d-txw84   1/1     Running            0          9h
+adservice-6f7bb86b4b-4fh5b               1/1     Running            0          9h
+emailservice-5f77b4c57b-69w82            1/1     Running            0          9h
+checkoutservice-6d778f4db8-lrgwh         1/1     Running            0          9h
+frontend-b799f7b4f-p776d                 1/1     Running            0          9h
+cartservice-84f9d5dfc7-tvz29             1/1     Running            0          9h
+recommendationservice-6bd5dfc4cd-twkpj   1/1     Running            0          22s
+currencyservice-74849f9d87-x2zgd         1/1     Running            0          21s
+recommendationservice-7cdff578fb-gkm8v   1/1     Terminating        0          3h26m
+currencyservice-7fff5b4bc4-b4jx7         1/1     Terminating        0          3h21m
+redis-cart-5fc8dbc89-jdlsm               1/1     Running            0          19s
+paymentservice-5c4958d57-z9htl           1/1     Running            0          21s
+paymentservice-b6cc4dbb4-fxcf9           1/1     Terminating        0          3h18m
+frontend-56598fc7bf-l45wm                0/1     ImagePullBackOff   0          21s
+cartservice-546fb74dd5-d2bcr             0/1     ImagePullBackOff   0          20s
+checkoutservice-68c845b5c9-2qxw8         0/1     ImagePullBackOff   0          21s
+emailservice-d77549787-27wz4             0/1     ImagePullBackOff   0          19s
+productcatalogservice-778c65576-7f245    0/1     ImagePullBackOff   0          22s
+shippingservice-7b695dbff7-pf7w7         0/1     ImagePullBackOff   0          20s
+adservice-59b446f996-74vnb               0/1     ImagePullBackOff   0          19s
+
+Lenovo@DESKTOP-M5DT73G MINGW64 /c/Users/ranjan/DevOps-bootcamp/online-boutique-shop (main)
+$ kubectl get pods -n online-microservice
+NAME                                     READY   STATUS             RESTARTS   AGE
+shippingservice-66bf78d8d-fnbfv          1/1     Running            0          9h
+productcatalogservice-69669cf47d-txw84   1/1     Running            0          9h
+adservice-6f7bb86b4b-4fh5b               1/1     Running            0          9h
+emailservice-5f77b4c57b-69w82            1/1     Running            0          9h
+checkoutservice-6d778f4db8-lrgwh         1/1     Running            0          9h
+frontend-b799f7b4f-p776d                 1/1     Running            0          9h
+cartservice-84f9d5dfc7-tvz29             1/1     Running            0          9h
+recommendationservice-6bd5dfc4cd-twkpj   1/1     Running            0          30s
+currencyservice-74849f9d87-x2zgd         1/1     Running            0          29s
+recommendationservice-7cdff578fb-gkm8v   1/1     Terminating        0          3h26m
+currencyservice-7fff5b4bc4-b4jx7         1/1     Terminating        0          3h21m
+redis-cart-5fc8dbc89-jdlsm               1/1     Running            0          27s
+paymentservice-5c4958d57-z9htl           1/1     Running            0          29s
+paymentservice-b6cc4dbb4-fxcf9           1/1     Terminating        0          3h18m
+productcatalogservice-778c65576-7f245    0/1     ImagePullBackOff   0          30s
+adservice-59b446f996-74vnb               0/1     ImagePullBackOff   0          27s
+checkoutservice-68c845b5c9-2qxw8         0/1     ErrImagePull       0          29s
+emailservice-d77549787-27wz4             0/1     ErrImagePull       0          27s
+shippingservice-7b695dbff7-pf7w7         0/1     ErrImagePull       0          28s
+cartservice-546fb74dd5-d2bcr             0/1     ErrImagePull       0          28s
+frontend-56598fc7bf-l45wm                0/1     ErrImagePull       0          29s
+
+Lenovo@DESKTOP-M5DT73G MINGW64 /c/Users/ranjan/DevOps-bootcamp/online-boutique-shop (main)
+$ kubectl get pods -n online-microservice
+NAME                                     READY   STATUS         RESTARTS   AGE
+shippingservice-66bf78d8d-fnbfv          1/1     Running        0          9h
+productcatalogservice-69669cf47d-txw84   1/1     Running        0          9h
+adservice-6f7bb86b4b-4fh5b               1/1     Running        0          9h
+emailservice-5f77b4c57b-69w82            1/1     Running        0          9h
+checkoutservice-6d778f4db8-lrgwh         1/1     Running        0          9h
+frontend-b799f7b4f-p776d                 1/1     Running        0          9h
+cartservice-84f9d5dfc7-tvz29             1/1     Running        0          9h
+recommendationservice-6bd5dfc4cd-twkpj   1/1     Running        0          40s
+currencyservice-74849f9d87-x2zgd         1/1     Running        0          39s
+redis-cart-5fc8dbc89-jdlsm               1/1     Running        0          37s
+paymentservice-5c4958d57-z9htl           1/1     Running        0          39s
+checkoutservice-68c845b5c9-2qxw8         0/1     ErrImagePull   0          39s
+emailservice-d77549787-27wz4             0/1     ErrImagePull   0          37s
+shippingservice-7b695dbff7-pf7w7         0/1     ErrImagePull   0          38s
+cartservice-546fb74dd5-d2bcr             0/1     ErrImagePull   0          38s
+frontend-56598fc7bf-l45wm                0/1     ErrImagePull   0          39s
+adservice-59b446f996-74vnb               0/1     ErrImagePull   0          37s
+productcatalogservice-778c65576-7f245    0/1     ErrImagePull   0          40s
+
+Lenovo@DESKTOP-M5DT73G MINGW64 /c/Users/ranjan/DevOps-bootcamp/online-boutique-shop (main)
+$ kubectl get pods -n online-microservice
+NAME                                     READY   STATUS             RESTARTS   AGE
+shippingservice-66bf78d8d-fnbfv          1/1     Running            0          9h
+productcatalogservice-69669cf47d-txw84   1/1     Running            0          9h
+adservice-6f7bb86b4b-4fh5b               1/1     Running            0          9h
+emailservice-5f77b4c57b-69w82            1/1     Running            0          9h
+checkoutservice-6d778f4db8-lrgwh         1/1     Running            0          9h
+frontend-b799f7b4f-p776d                 1/1     Running            0          9h
+cartservice-84f9d5dfc7-tvz29             1/1     Running            0          9h
+recommendationservice-6bd5dfc4cd-twkpj   1/1     Running            0          2m19s
+currencyservice-74849f9d87-x2zgd         1/1     Running            0          2m18s
+redis-cart-5fc8dbc89-jdlsm               1/1     Running            0          2m16s
+paymentservice-5c4958d57-z9htl           1/1     Running            0          2m18s
+emailservice-d77549787-27wz4             0/1     ImagePullBackOff   0          2m16s
+frontend-56598fc7bf-l45wm                0/1     ImagePullBackOff   0          2m18s
+adservice-59b446f996-74vnb               0/1     ImagePullBackOff   0          2m16s
+checkoutservice-68c845b5c9-2qxw8         0/1     ImagePullBackOff   0          2m18s
+productcatalogservice-778c65576-7f245    0/1     ImagePullBackOff   0          2m19s
+cartservice-546fb74dd5-d2bcr             0/1     ImagePullBackOff   0          2m17s
+shippingservice-7b695dbff7-pf7w7         0/1     ImagePullBackOff   0          2m17s
+
+Lenovo@DESKTOP-M5DT73G MINGW64 /c/Users/ranjan/DevOps-bootcamp/online-boutique-shop (main)
+$ kubectl get pods -n online-microservice
+NAME                                     READY   STATUS             RESTARTS   AGE
+shippingservice-66bf78d8d-fnbfv          1/1     Running            0          9h
+productcatalogservice-69669cf47d-txw84   1/1     Running            0          9h
+adservice-6f7bb86b4b-4fh5b               1/1     Running            0          9h
+emailservice-5f77b4c57b-69w82            1/1     Running            0          9h
+checkoutservice-6d778f4db8-lrgwh         1/1     Running            0          9h
+frontend-b799f7b4f-p776d                 1/1     Running            0          9h
+cartservice-84f9d5dfc7-tvz29             1/1     Running            0          9h
+recommendationservice-6bd5dfc4cd-twkpj   1/1     Running            0          12m
+currencyservice-74849f9d87-x2zgd         1/1     Running            0          12m
+redis-cart-5fc8dbc89-jdlsm               1/1     Running            0          12m
+paymentservice-5c4958d57-z9htl           1/1     Running            0          12m
+frontend-56598fc7bf-l45wm                0/1     ImagePullBackOff   0          12m
+emailservice-d77549787-27wz4             0/1     ImagePullBackOff   0          12m
+productcatalogservice-778c65576-7f245    0/1     ImagePullBackOff   0          12m
+cartservice-546fb74dd5-d2bcr             0/1     ImagePullBackOff   0          12m
+shippingservice-7b695dbff7-pf7w7         0/1     ImagePullBackOff   0          12m
+checkoutservice-68c845b5c9-2qxw8         0/1     ImagePullBackOff   0          12m
+adservice-59b446f996-74vnb               0/1     ImagePullBackOff   0          12m
+
+Lenovo@DESKTOP-M5DT73G MINGW64 /c/Users/ranjan/DevOps-bootcamp/online-boutique-shop (main)
+$ git pull
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 3 (delta 1), reused 0 (delta 0), pack-reused 0 (from 0)
+Unpacking objects: 100% (3/3), 722 bytes | 55.00 KiB/s, done.
+From https://gitlab.com/Ryadav192/online-boutique-shop
+   a7d6be9..8b07b49  main       -> origin/main
+Updating a7d6be9..8b07b49
+Fast-forward
+ conf.yaml | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+Lenovo@DESKTOP-M5DT73G MINGW64 /c/Users/ranjan/DevOps-bootcamp/online-boutique-shop (main)
+$ kubectl apply -f conf.yaml -n online-microservice
+namespace/online-microservice unchanged
+deployment.apps/productcatalogservice configured
+deployment.apps/recommendationservice unchanged
+deployment.apps/frontend configured
+deployment.apps/checkoutservice configured
+deployment.apps/paymentservice unchanged
+deployment.apps/currencyservice unchanged
+deployment.apps/cartservice configured
+deployment.apps/shippingservice configured
+deployment.apps/emailservice configured
+deployment.apps/adservice configured
+deployment.apps/redis-cart unchanged
+
+Lenovo@DESKTOP-M5DT73G MINGW64 /c/Users/ranjan/DevOps-bootcamp/online-boutique-shop (main)
+$ kubectl get pods -n online-microservice
+NAME                                     READY   STATUS              RESTARTS   AGE
+shippingservice-66bf78d8d-fnbfv          1/1     Running             0          9h
+adservice-6f7bb86b4b-4fh5b               1/1     Running             0          9h
+emailservice-5f77b4c57b-69w82            1/1     Running             0          9h
+cartservice-84f9d5dfc7-tvz29             1/1     Running             0          9h
+recommendationservice-6bd5dfc4cd-twkpj   1/1     Running             0          13m
+currencyservice-74849f9d87-x2zgd         1/1     Running             0          13m
+redis-cart-5fc8dbc89-jdlsm               1/1     Running             0          13m
+paymentservice-5c4958d57-z9htl           1/1     Running             0          13m
+cartservice-6667fcf48-jvgbs              0/1     ContainerCreating   0          11s
+shippingservice-79d4f9cb95-xdk72         0/1     ContainerCreating   0          11s
+emailservice-6cfd587f8-wg9sb             0/1     ContainerCreating   0          10s
+adservice-c7f95bb99-shd26                0/1     ContainerCreating   0          10s
+frontend-55579d7d7b-7q9xx                1/1     Running             0          12s
+productcatalogservice-678ff54564-zjp8p   1/1     Running             0          12s
+checkoutservice-7c75b89588-lfjpd         1/1     Running             0          12s
+
+
