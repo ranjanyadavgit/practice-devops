@@ -1,0 +1,192 @@
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo (master)
+$ az aks get-credentials --resource-group ecommerce-demo --name aks-cluster
+WARNING: Merged "aks-cluster" as current context in C:\Users\Lenovo\.kube\config
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo (master)
+$ ls
+AKS/   EKS/  K8s/     OpenShift/  Swarm/  catalogue/  docker-compose-load.yaml  fluentd/   mongo/  payment/            ratings/   user/
+DCOS/  GKE/  LICENSE  README.md   cart/   dispatch/   docker-compose.yaml       load-gen/  mysql/  pullbaseimages.sh*  shipping/  web/
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo (master)
+$ kubectl get pods
+No resources found in default namespace.
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo (master)
+$ kubectl config current-context
+aks-cluster
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo (master)
+$ cd AKS/
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS (master)
+$ ls
+helm/
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS (master)
+$ cd helm
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ ls
+Chart.yaml  README.md  ingress.yaml  templates/  values.yaml
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ cat ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: robot-shop
+  name: robot-shop
+spec:
+  ingressClassName: azure-application-gateway
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: web
+                port:
+                  number: 8080
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl create ns robot-shop
+namespace/robot-shop created
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl get ns
+NAME              STATUS   AGE
+default           Active   28m
+kube-node-lease   Active   28m
+kube-public       Active   28m
+kube-system       Active   28m
+robot-shop        Active   11s
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ helm install robot-shop --namespace robot-shop .
+NAME: robot-shop
+LAST DEPLOYED: Wed Aug 13 11:22:21 2025
+NAMESPACE: robot-shop
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl get storageclass
+NAME                    PROVISIONER          RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+azurefile               file.csi.azure.com   Delete          Immediate              true                   34m
+azurefile-csi           file.csi.azure.com   Delete          Immediate              true                   34m
+azurefile-csi-premium   file.csi.azure.com   Delete          Immediate              true                   34m
+azurefile-premium       file.csi.azure.com   Delete          Immediate              true                   34m
+default (default)       disk.csi.azure.com   Delete          WaitForFirstConsumer   true                   34m
+managed                 disk.csi.azure.com   Delete          WaitForFirstConsumer   true                   34m
+managed-csi             disk.csi.azure.com   Delete          WaitForFirstConsumer   true                   34m
+managed-csi-premium     disk.csi.azure.com   Delete          WaitForFirstConsumer   true                   34m
+managed-premium         disk.csi.azure.com   Delete          WaitForFirstConsumer   true                   34m
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl get pods
+No resources found in default namespace.
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl get pods -n robot-shop
+NAME                        READY   STATUS    RESTARTS   AGE
+cart-655b74fb49-d8z7g       1/1     Running   0          5m15s
+catalogue-b4855db44-x8d77   1/1     Running   0          5m15s
+dispatch-845799dc84-d964p   1/1     Running   0          5m15s
+mongodb-69d9cf5747-zsv2l    1/1     Running   0          5m15s
+mysql-8c599b989-nh6hk       1/1     Running   0          5m15s
+payment-6589fd67f6-lvfvj    1/1     Running   0          5m15s
+rabbitmq-876447689-449l5    1/1     Running   0          5m15s
+ratings-6fb5c59f44-cpkxb    1/1     Running   0          5m15s
+redis-0                     1/1     Running   0          5m15s
+shipping-67cdd8c8c6-pvzv9   1/1     Running   0          5m15s
+user-b4977f556-p2j2f        1/1     Running   0          5m15s
+web-7649bf4886-n2n8n        1/1     Running   0          5m15s
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl describe pod redis-0
+Error from server (NotFound): pods "redis-0" not found
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl describe pod redis-0 -n robot-shop
+Name:             redis-0
+Namespace:        robot-shop
+Priority:         0
+Service Account:  default
+Node:             aks-agentpool-35541561-vmss000002/10.224.0.6
+Start Time:       Wed, 13 Aug 2025 11:22:37 +0530
+Labels:           apps.kubernetes.io/pod-index=0
+                  controller-revision-hash=redis-57768f5d94
+                  service=redis
+                  statefulset.kubernetes.io/pod-name=redis-0
+Annotations:      <none>
+Status:           Running
+IP:               10.244.1.248
+IPs:
+  IP:           10.244.1.248
+Controlled By:  StatefulSet/redis
+Containers:
+  redis:
+    Container ID:   containerd://ab63927482b939a34a008ac70017fe4e9e8484b418c8c581e9e4ff6744d60467
+    Image:          redis:4.0.6
+    Image ID:       docker.io/library/redis@sha256:0e773022cd6572a5153e5013afced0f7191652d3cdf9b1c6785eb13f6b2974b1
+    Port:           6379/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Wed, 13 Aug 2025 11:23:10 +0530
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     200m
+      memory:  100Mi
+    Requests:
+      cpu:        100m
+      memory:     50Mi
+    Environment:  <none>
+    Mounts:
+      /mnt/redis from data (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-62mls (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True
+  Initialized                 True
+  Ready                       True
+  ContainersReady             True
+  PodScheduled                True
+Volumes:
+  data:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  data-redis-0
+    ReadOnly:   false
+  kube-api-access-62mls:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/memory-pressure:NoSchedule op=Exists
+                             node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason                  Age    From                     Message
+  ----    ------                  ----   ----                     -------
+  Normal  Scheduled               5m50s  default-scheduler        Successfully assigned robot-shop/redis-0 to aks-agentpool-35541561-vmss000002
+  Normal  SuccessfulAttachVolume  5m36s  attachdetach-controller  AttachVolume.Attach succeeded for volume "pvc-32cad09b-f095-4a4b-b5d4-f0a84b0207e6"
+  Normal  Pulling                 5m29s  kubelet                  Pulling image "redis:4.0.6"
+  Normal  Pulled                  5m18s  kubelet                  Successfully pulled image "redis:4.0.6" in 10.153s (10.153s including waiting). Image size: 39397934 bytes.
+  Normal  Created                 5m18s  kubelet                  Created container: redis
+  Normal  Started                 5m18s  kubelet                  Started container redis
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl edit pod redis-0 -n robot-shop
+Edit cancelled, no changes made.
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl get pvc -n robot-shop
+NAME           STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+data-redis-0   Bound    pvc-32cad09b-f095-4a4b-b5d4-f0a84b0207e6   1Gi        RWO            default        <unset>                 10m
+
