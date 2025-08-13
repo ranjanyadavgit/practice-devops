@@ -390,3 +390,203 @@ shipping    ClusterIP      10.0.59.122    <none>           8080/TCP             
 user        ClusterIP      10.0.214.59    <none>           8080/TCP                      4h11m
 web         LoadBalancer   10.0.65.186    130.213.143.77   8080:30735/TCP                4h11m
 
+
+
+
+
+
+
+
+
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl get deployment -n robot-shop
+NAME        READY   UP-TO-DATE   AVAILABLE   AGE
+cart        1/1     1            1           4h10m
+catalogue   1/1     1            1           4h10m
+dispatch    1/1     1            1           4h10m
+mongodb     1/1     1            1           4h10m
+mysql       1/1     1            1           4h10m
+payment     1/1     1            1           4h10m
+rabbitmq    1/1     1            1           4h10m
+ratings     1/1     1            1           4h10m
+shipping    1/1     1            1           4h10m
+user        1/1     1            1           4h10m
+web         1/1     1            1           4h10m
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl get pods -n robot-shop
+NAME                        READY   STATUS    RESTARTS   AGE
+cart-655b74fb49-d8z7g       1/1     Running   0          4h10m
+catalogue-b4855db44-x8d77   1/1     Running   0          4h10m
+dispatch-845799dc84-d964p   1/1     Running   0          4h10m
+mongodb-69d9cf5747-zsv2l    1/1     Running   0          4h10m
+mysql-8c599b989-nh6hk       1/1     Running   0          4h10m
+payment-6589fd67f6-lvfvj    1/1     Running   0          4h10m
+rabbitmq-876447689-449l5    1/1     Running   0          4h10m
+ratings-6fb5c59f44-cpkxb    1/1     Running   0          4h10m
+redis-0                     1/1     Running   0          4h10m
+shipping-67cdd8c8c6-pvzv9   1/1     Running   0          4h10m
+user-b4977f556-p2j2f        1/1     Running   0          4h10m
+web-7649bf4886-n2n8n        1/1     Running   0          4h10m
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl get svc -n robot-shop
+NAME        TYPE           CLUSTER-IP     EXTERNAL-IP      PORT(S)                       AGE
+cart        ClusterIP      10.0.101.205   <none>           8080/TCP                      4h11m
+catalogue   ClusterIP      10.0.185.95    <none>           8080/TCP                      4h11m
+dispatch    ClusterIP      None           <none>           55555/TCP                     4h11m
+mongodb     ClusterIP      10.0.133.29    <none>           27017/TCP                     4h11m
+mysql       ClusterIP      10.0.170.112   <none>           3306/TCP                      4h11m
+payment     ClusterIP      10.0.92.45     <none>           8080/TCP                      4h11m
+rabbitmq    ClusterIP      10.0.156.80    <none>           5672/TCP,15672/TCP,4369/TCP   4h11m
+ratings     ClusterIP      10.0.48.254    <none>           80/TCP                        4h11m
+redis       ClusterIP      10.0.247.208   <none>           6379/TCP                      4h11m
+shipping    ClusterIP      10.0.59.122    <none>           8080/TCP                      4h11m
+user        ClusterIP      10.0.214.59    <none>           8080/TCP                      4h11m
+web         LoadBalancer   10.0.65.186    130.213.143.77   8080:30735/TCP                4h11m
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl create ns ranjan
+namespace/ranjan created
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl get ingress - robot-shop
+Error from server (NotFound): ingresses.networking.k8s.io "-" not found
+Error from server (NotFound): ingresses.networking.k8s.io "robot-shop" not found
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl get ingress -n robot-shop
+No resources found in robot-shop namespace.
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ ls
+Chart.yaml  README.md  ingress.yaml  templates/  values.yaml
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl apply -f ingress.yaml
+ingress.networking.k8s.io/robot-shop created
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl get ingress - robot-shop
+Error from server (NotFound): ingresses.networking.k8s.io "-" not found
+Error from server (NotFound): ingresses.networking.k8s.io "robot-shop" not found
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl get ingress -n robot-shop
+NAME         CLASS                       HOSTS   ADDRESS   PORTS   AGE
+robot-shop   azure-application-gateway   *                 80      20s
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl get pods -n robot-shop
+NAME                        READY   STATUS    RESTARTS   AGE
+cart-655b74fb49-d8z7g       1/1     Running   0          4h27m
+catalogue-b4855db44-x8d77   1/1     Running   0          4h27m
+dispatch-845799dc84-d964p   1/1     Running   0          4h27m
+mongodb-69d9cf5747-zsv2l    1/1     Running   0          4h27m
+mysql-8c599b989-nh6hk       1/1     Running   0          4h27m
+payment-6589fd67f6-lvfvj    1/1     Running   0          4h27m
+rabbitmq-876447689-449l5    1/1     Running   0          4h27m
+ratings-6fb5c59f44-jwrsl    0/1     Pending   0          4m55s
+redis-0                     0/1     Pending   0          4m53s
+shipping-67cdd8c8c6-s5ft9   0/1     Pending   0          4m55s
+user-b4977f556-p2j2f        1/1     Running   0          4h27m
+web-7649bf4886-n2n8n        1/1     Running   0          4h27m
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl get pods -n robot-shop
+NAME                        READY   STATUS    RESTARTS   AGE
+cart-655b74fb49-d8z7g       1/1     Running   0          4h28m
+catalogue-b4855db44-x8d77   1/1     Running   0          4h28m
+dispatch-845799dc84-d964p   1/1     Running   0          4h28m
+mongodb-69d9cf5747-zsv2l    1/1     Running   0          4h28m
+mysql-8c599b989-nh6hk       1/1     Running   0          4h28m
+payment-6589fd67f6-lvfvj    1/1     Running   0          4h28m
+rabbitmq-876447689-449l5    1/1     Running   0          4h28m
+ratings-6fb5c59f44-jwrsl    0/1     Pending   0          5m36s
+redis-0                     0/1     Pending   0          5m34s
+shipping-67cdd8c8c6-s5ft9   0/1     Pending   0          5m36s
+user-b4977f556-p2j2f        1/1     Running   0          4h28m
+web-7649bf4886-n2n8n        1/1     Running   0          4h28m
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl get ingress -n robot-shop
+NAME         CLASS                       HOSTS   ADDRESS   PORTS   AGE
+robot-shop   azure-application-gateway   *                 80      3m
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl apply -f ingress.yaml -n robot-shop
+ingress.networking.k8s.io/robot-shop unchanged
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl get ingress -n robot-shop
+NAME         CLASS                       HOSTS   ADDRESS   PORTS   AGE
+robot-shop   azure-application-gateway   *                 80      3m25s
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl get pods -n kube-system
+NAME                                                 READY   STATUS    RESTARTS   AGE
+aks-secrets-store-csi-driver-4bhf9                   3/3     Running   0          7m2s
+aks-secrets-store-csi-driver-wcvvp                   3/3     Running   0          7m2s
+aks-secrets-store-provider-azure-n4jl5               1/1     Running   0          7m2s
+aks-secrets-store-provider-azure-wgwnk               1/1     Running   0          7m2s
+azure-cns-47ngt                                      1/1     Running   0          4h56m
+azure-cns-d666z                                      1/1     Running   0          4h57m
+azure-ip-masq-agent-jssjh                            1/1     Running   0          4h56m
+azure-ip-masq-agent-kmlwd                            1/1     Running   0          4h57m
+azure-wi-webhook-controller-manager-d9bbd7cd-gscsh   1/1     Running   0          4h55m
+azure-wi-webhook-controller-manager-d9bbd7cd-j95wn   1/1     Running   0          4h55m
+cloud-node-manager-7vdkq                             1/1     Running   0          4h56m
+cloud-node-manager-w8llj                             1/1     Running   0          4h57m
+coredns-6f776c8fb5-k7qvq                             1/1     Running   0          4h57m
+coredns-6f776c8fb5-ngkcx                             1/1     Running   0          4h59m
+coredns-autoscaler-79bcb4fd6b-2fsqw                  1/1     Running   0          4h59m
+csi-azuredisk-node-qkwgn                             3/3     Running   0          4h56m
+csi-azuredisk-node-vpdnl                             3/3     Running   0          4h57m
+csi-azurefile-node-7bf26                             3/3     Running   0          4h56m
+csi-azurefile-node-s8f4b                             3/3     Running   0          4h57m
+eraser-controller-manager-5fcc94f5d7-9lb68           1/1     Running   0          4h55m
+konnectivity-agent-8555b8cfc4-cbqjl                  1/1     Running   0          4h24m
+konnectivity-agent-8555b8cfc4-fcqk6                  1/1     Running   0          4h24m
+konnectivity-agent-autoscaler-844df78bbd-t5tpm       1/1     Running   0          4h59m
+kube-proxy-4hdq2                                     1/1     Running   0          4h56m
+kube-proxy-gqlqb                                     1/1     Running   0          4h57m
+metrics-server-85db94b47c-ntc5j                      2/2     Running   0          4h57m
+metrics-server-85db94b47c-pjsv9                      2/2     Running   0          4h57m
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl get pods -n kube-system
+NAME                                                 READY   STATUS    RESTARTS   AGE
+aks-secrets-store-csi-driver-4bhf9                   3/3     Running   0          7m34s
+aks-secrets-store-csi-driver-wcvvp                   3/3     Running   0          7m34s
+aks-secrets-store-provider-azure-n4jl5               1/1     Running   0          7m34s
+aks-secrets-store-provider-azure-wgwnk               1/1     Running   0          7m34s
+azure-cns-47ngt                                      1/1     Running   0          4h57m
+azure-cns-d666z                                      1/1     Running   0          4h58m
+azure-ip-masq-agent-jssjh                            1/1     Running   0          4h57m
+azure-ip-masq-agent-kmlwd                            1/1     Running   0          4h58m
+azure-wi-webhook-controller-manager-d9bbd7cd-gscsh   1/1     Running   0          4h56m
+azure-wi-webhook-controller-manager-d9bbd7cd-j95wn   1/1     Running   0          4h56m
+cloud-node-manager-7vdkq                             1/1     Running   0          4h57m
+cloud-node-manager-w8llj                             1/1     Running   0          4h58m
+coredns-6f776c8fb5-k7qvq                             1/1     Running   0          4h57m
+coredns-6f776c8fb5-ngkcx                             1/1     Running   0          5h
+coredns-autoscaler-79bcb4fd6b-2fsqw                  1/1     Running   0          5h
+csi-azuredisk-node-qkwgn                             3/3     Running   0          4h57m
+csi-azuredisk-node-vpdnl                             3/3     Running   0          4h58m
+csi-azurefile-node-7bf26                             3/3     Running   0          4h57m
+csi-azurefile-node-s8f4b                             3/3     Running   0          4h58m
+eraser-controller-manager-5fcc94f5d7-9lb68           1/1     Running   0          4h56m
+konnectivity-agent-8555b8cfc4-cbqjl                  1/1     Running   0          4h25m
+konnectivity-agent-8555b8cfc4-fcqk6                  1/1     Running   0          4h25m
+konnectivity-agent-autoscaler-844df78bbd-t5tpm       1/1     Running   0          5h
+kube-proxy-4hdq2                                     1/1     Running   0          4h57m
+kube-proxy-gqlqb                                     1/1     Running   0          4h58m
+metrics-server-85db94b47c-ntc5j                      2/2     Running   0          4h57m
+metrics-server-85db94b47c-pjsv9                      2/2     Running   0          4h57m
+
+
+
+
+
+
