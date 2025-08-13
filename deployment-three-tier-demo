@@ -338,3 +338,55 @@ $ kubectl get pvc -n robot-shop
 NAME           STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
 data-redis-0   Bound    pvc-32cad09b-f095-4a4b-b5d4-f0a84b0207e6   1Gi        RWO            default        <unset>                 10m
 
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl get pvc -n robot-shop
+NAME           STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+data-redis-0   Bound    pvc-32cad09b-f095-4a4b-b5d4-f0a84b0207e6   1Gi        RWO            default        <unset>                 4h7m
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl get deployment -n robot-shop
+NAME        READY   UP-TO-DATE   AVAILABLE   AGE
+cart        1/1     1            1           4h10m
+catalogue   1/1     1            1           4h10m
+dispatch    1/1     1            1           4h10m
+mongodb     1/1     1            1           4h10m
+mysql       1/1     1            1           4h10m
+payment     1/1     1            1           4h10m
+rabbitmq    1/1     1            1           4h10m
+ratings     1/1     1            1           4h10m
+shipping    1/1     1            1           4h10m
+user        1/1     1            1           4h10m
+web         1/1     1            1           4h10m
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl get pods -n robot-shop
+NAME                        READY   STATUS    RESTARTS   AGE
+cart-655b74fb49-d8z7g       1/1     Running   0          4h10m
+catalogue-b4855db44-x8d77   1/1     Running   0          4h10m
+dispatch-845799dc84-d964p   1/1     Running   0          4h10m
+mongodb-69d9cf5747-zsv2l    1/1     Running   0          4h10m
+mysql-8c599b989-nh6hk       1/1     Running   0          4h10m
+payment-6589fd67f6-lvfvj    1/1     Running   0          4h10m
+rabbitmq-876447689-449l5    1/1     Running   0          4h10m
+ratings-6fb5c59f44-cpkxb    1/1     Running   0          4h10m
+redis-0                     1/1     Running   0          4h10m
+shipping-67cdd8c8c6-pvzv9   1/1     Running   0          4h10m
+user-b4977f556-p2j2f        1/1     Running   0          4h10m
+web-7649bf4886-n2n8n        1/1     Running   0          4h10m
+
+Lenovo@DESKTOP-M5DT73G MINGW64 ~/three-tr-demo/three-tier-architecture-demo/AKS/helm (master)
+$ kubectl get svc -n robot-shop
+NAME        TYPE           CLUSTER-IP     EXTERNAL-IP      PORT(S)                       AGE
+cart        ClusterIP      10.0.101.205   <none>           8080/TCP                      4h11m
+catalogue   ClusterIP      10.0.185.95    <none>           8080/TCP                      4h11m
+dispatch    ClusterIP      None           <none>           55555/TCP                     4h11m
+mongodb     ClusterIP      10.0.133.29    <none>           27017/TCP                     4h11m
+mysql       ClusterIP      10.0.170.112   <none>           3306/TCP                      4h11m
+payment     ClusterIP      10.0.92.45     <none>           8080/TCP                      4h11m
+rabbitmq    ClusterIP      10.0.156.80    <none>           5672/TCP,15672/TCP,4369/TCP   4h11m
+ratings     ClusterIP      10.0.48.254    <none>           80/TCP                        4h11m
+redis       ClusterIP      10.0.247.208   <none>           6379/TCP                      4h11m
+shipping    ClusterIP      10.0.59.122    <none>           8080/TCP                      4h11m
+user        ClusterIP      10.0.214.59    <none>           8080/TCP                      4h11m
+web         LoadBalancer   10.0.65.186    130.213.143.77   8080:30735/TCP                4h11m
+
