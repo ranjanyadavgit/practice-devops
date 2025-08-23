@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Daemonset
+metadata:
+   name: fluentd
+   namespace: default
+spec:
+  selector:
+    matchlabels:
+     app:fluentd
+  template:
+    metadata:
+      label:
+       app:fluentd
+    container:
+    - name: fluentd
+      image: fluentd
+       
