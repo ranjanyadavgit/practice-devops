@@ -1,0 +1,174 @@
+sudo apt-get update -y --installing docker engine
+sudo apt-get install ca-certificates curl -y
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+  sudo apt-get update -y
+  sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+  sudo systemctl start docker
+  sudo systemctl enable docker
+  sudo docker run hello-world
+  sudo usermod -aG docker $USER
+  sudo docker images
+
+docker run -it --name cli-demo busybox /bin/sh -- run a container named cli-demo with busybox image in interactive mode and open a shell
+
+root@d1d481a3f766967c:~# docker ps -a --> list all containers
+CONTAINER ID   IMAGE     COMMAND     CREATED              STATUS                     PORTS     NAMES
+fccded7e11c6   busybox   "/bin/sh"   About a minute ago   Exited (0) 9 seconds ago             cli-demo
+root@d1d481a3f766967c:~# 
+
+docker restart cli-demo --> Restart the cli-demo container
+
+docker logs cli-demo --> check logs from cli-demo container
+
+below are the logs from cli-demo container
+
+ docker logs cli-demo
+/ # ls
+bin    etc    lib    proc   sys    usr
+dev    home   lib64  root   tmp    var
+/ # cd bin
+/bin # ls
+[                  fsck               mknod              shuf
+[[                 fsck.minix         mkpasswd           slattach
+acpid              fsfreeze           mkswap             sleep
+add-shell          fstrim             mktemp             smemcap
+addgroup           fsync              modinfo            softlimit
+adduser            ftpd               modprobe           sort
+adjtimex           ftpget             more               split
+ar                 ftpput             mount              ssl_client
+arch               fuser              mountpoint         start-stop-daemon
+arp                getconf            mpstat             stat
+arping             getfattr           mt                 strings
+ascii              getopt             mv                 stty
+ash                getty              nameif             su
+awk                grep               nanddump           sulogin
+base32             groups             nandwrite          sum
+base64             gunzip             nbd-client         sv
+basename           gzip               nc                 svc
+bc                 halt               netstat            svlogd
+beep               hd                 nice               svok
+blkdiscard         hdparm             nl                 swapoff
+blkid              head               nmeter             swapon
+blockdev           hexdump            nohup              switch_root
+bootchartd         hexedit            nologin            sync
+brctl              hostid             nproc              sysctl
+bunzip2            hostname           nsenter            syslogd
+busybox            httpd              nslookup           tac
+bzcat              hush               ntpd               tail
+bzip2              hwclock            od                 tar
+cal                i2cdetect          openvt             taskset
+cat                i2cdump            partprobe          tc
+chat               i2cget             passwd             tcpsvd
+chattr             i2cset             paste              tee
+chgrp              i2ctransfer        patch              telnet
+chmod              id                 pgrep              telnetd
+chown              ifconfig           pidof              test
+chpasswd           ifdown             ping               tftp
+chpst              ifenslave          ping6              tftpd
+chroot             ifplugd            pipe_progress      time
+chrt               ifup               pivot_root         timeout
+chvt               inetd              pkill              top
+cksum              init               pmap               touch
+clear              insmod             popmaildir         tr
+cmp                install            poweroff           traceroute
+comm               ionice             powertop           traceroute6
+conspy             iostat             printenv           tree
+cp                 ip                 printf             true
+cpio               ipaddr             ps                 truncate
+crc32              ipcalc             pscan              ts
+crond              ipcrm              pstree             tsort
+crontab            ipcs               pwd                tty
+cryptpw            iplink             pwdx               ttysize
+cttyhack           ipneigh            raidautorun        tunctl
+cut                iproute            rdate              ubiattach
+date               iprule             rdev               ubidetach
+dc                 iptunnel           readahead          ubimkvol
+dd                 kbd_mode           readlink           ubirename
+deallocvt          kill               readprofile        ubirmvol
+delgroup           killall            realpath           ubirsvol
+deluser            killall5           reboot             ubiupdatevol
+depmod             klogd              reformime          udhcpc
+devmem             last               remove-shell       udhcpc6
+df                 less               renice             udhcpd
+dhcprelay          link               reset              udpsvd
+diff               linux32            resize             uevent
+dirname            linux64            resume             umount
+dmesg              linuxrc            rev                uname
+dnsd               ln                 rm                 unexpand
+dnsdomainname      loadfont           rmdir              uniq
+dos2unix           loadkmap           rmmod              unix2dos
+dpkg               logger             route              unlink
+dpkg-deb           login              rpm                unlzma
+du                 logname            rpm2cpio           unshare
+dumpkmap           logread            rtcwake            unxz
+dumpleases         losetup            run-init           unzip
+echo               lpd                run-parts          uptime
+ed                 lpq                runlevel           users
+egrep              lpr                runsv              usleep
+eject              ls                 runsvdir           uudecode
+env                lsattr             rx                 uuencode
+envdir             lsmod              script             vconfig
+envuidgid          lsof               scriptreplay       vi
+ether-wake         lspci              sed                vlock
+expand             lsscsi             seedrng            volname
+expr               lsusb              sendmail           w
+factor             lzcat              seq                wall
+fakeidentd         lzma               setarch            watch
+fallocate          lzop               setconsole         watchdog
+false              makedevs           setfattr           wc
+fatattr            makemime           setfont            wget
+fbset              man                setkeycodes        which
+fbsplash           md5sum             setlogcons         who
+fdflush            mdev               setpriv            whoami
+fdformat           mesg               setserial          whois
+fdisk              microcom           setsid             xargs
+fgconsole          mim                setuidgid          xxd
+fgrep              mkdir              sh                 xz
+find               mkdosfs            sha1sum            xzcat
+findfs             mke2fs             sha256sum          yes
+flock              mkfifo             sha3sum            zcat
+fold               mkfs.ext2          sha512sum          zcip
+free               mkfs.minix         showkey
+freeramdisk        mkfs.vfat          shred
+/bin # cd ..
+/ # ls
+bin    etc    lib    proc   sys    usr
+dev    home   lib64  root   tmp    var
+/ # cd tmp
+/tmp # ls
+/tmp # cd ..
+/ # cd var
+/var # ls
+spool  www
+/var # cd ..
+/ # exit
+root@d1d481a3f766967c:~# 
+
+--------------------------------
+root@d1d481a3f766967c:~# docker stop cli-demo --> command to stop running container
+cli-demo
+root@d1d481a3f766967c:~# 
+
+docker pull alpine -- command to pull image from alpine
+
+root@d1d481a3f766967c:~# docker pull alpine
+Using default tag: latest
+latest: Pulling from library/alpine
+9824c27679d3: Pull complete 
+Digest: sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1
+Status: Downloaded newer image for alpine:latest
+docker.io/library/alpine:latest
+root@d1d481a3f766967c:~# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+root@d1d481a3f766967c:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED         SIZE
+alpine       latest    9234e8fb04c4   8 weeks ago     8.31MB
+busybox      latest    0ed463b26dae   11 months ago   4.43MB
