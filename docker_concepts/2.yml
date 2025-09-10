@@ -1,0 +1,42 @@
+1.Search DockerHub for images related to "alpine".
+
+SOLUTION:
+sudo docker search alpine
+
+2
+Pull the image alpine:3.18 from DockerHub.
+SOLUTION:
+sudo docker pull alpine:3.18
+
+3
+List all locally available images.
+SOLUTION:
+sudo docker images
+
+
+4
+Tag the alpine:3.18 image as my-alpine:v1.
+SOLUTION:
+sudo docker tag alpine:3.18 my-alpine:v1
+
+5
+Inspect the image metadata of my-alpine:v1.
+SOLUTION:
+sudo docker inspect my-alpine:v1
+
+6
+Save the my-alpine:v1 image to a file named alpine.tar.
+SOLUTION:
+sudo docker save -o alpine.tar my-alpine:v1
+
+7
+Remove the local image to simulate a clean system.
+SOLUTION:
+sudo docker rmi my-alpine:v1
+
+8
+Reload the image from the tarball you saved earlier.
+SOLUTION:
+sudo docker load -i alpine.tar
+
+
