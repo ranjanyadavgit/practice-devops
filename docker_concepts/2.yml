@@ -8,26 +8,115 @@ Pull the image alpine:3.18 from DockerHub.
 SOLUTION:
 sudo docker pull alpine:3.18
 
+root@d1d481a3f766967c:~# docker pull alpine:3.18
+3.18: Pulling from library/alpine
+44cf07d57ee4: Pull complete 
+Digest: sha256:de0eb0b3f2a47ba1eb89389859a9bd88b28e82f5826b6969ad604979713c2d4f
+Status: Downloaded newer image for alpine:3.18
+docker.io/library/alpine:3.18
+root@d1d481a3f766967c:~# 
+
 3
 List all locally available images.
 SOLUTION:
 sudo docker images
 
+root@d1d481a3f766967c:~# sudo docker images
+REPOSITORY   TAG       IMAGE ID       CREATED         SIZE
+alpine       latest    9234e8fb04c4   8 weeks ago     8.31MB
+alpine       3.18      802c91d52981   6 months ago    7.36MB
+busybox      latest    0ed463b26dae   11 months ago   4.43MB
 
 4
 Tag the alpine:3.18 image as my-alpine:v1.
 SOLUTION:
 sudo docker tag alpine:3.18 my-alpine:v1
 
+root@d1d481a3f766967c:~# sudo docker tag alpine:3.18 my-alpine:v1
+root@d1d481a3f766967c:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED         SIZE
+alpine       latest    9234e8fb04c4   8 weeks ago     8.31MB
+alpine       3.18      802c91d52981   6 months ago    7.36MB
+my-alpine    v1        802c91d52981   6 months ago    7.36MB
+busybox      latest    0ed463b26dae   11 months ago   4.43MB
+
 5
 Inspect the image metadata of my-alpine:v1.
 SOLUTION:
 sudo docker inspect my-alpine:v1
 
+root@d1d481a3f766967c:~# sudo docker inspect my-alpine:v1
+[
+    {
+        "Id": "sha256:802c91d5298192c0f3a08101aeb5f9ade2992e22c9e27fa8b88eab82602550d0",
+        "RepoTags": [
+            "alpine:3.18",
+            "my-alpine:v1"
+        ],
+        "RepoDigests": [
+            "alpine@sha256:de0eb0b3f2a47ba1eb89389859a9bd88b28e82f5826b6969ad604979713c2d4f"
+        ],
+        "Parent": "",
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2025-02-14T03:03:06Z",
+        "DockerVersion": "",
+        "Author": "",
+        "Config": {
+            "Hostname": "",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "/bin/sh"
+            ],
+            "Image": "",
+            "Volumes": null,
+            "WorkingDir": "/",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": null
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 7359852,
+        "GraphDriver": {
+            "Data": {
+                "MergedDir": "/var/lib/docker/overlay2/3d9986d91dc9225fa5832a09ad0c985575c9af8f2d17f2d20cefee617bfed811/merged",
+                "UpperDir": "/var/lib/docker/overlay2/3d9986d91dc9225fa5832a09ad0c985575c9af8f2d17f2d20cefee617bfed811/diff",
+                "WorkDir": "/var/lib/docker/overlay2/3d9986d91dc9225fa5832a09ad0c985575c9af8f2d17f2d20cefee617bfed811/work"
+            },
+            "Name": "overlay2"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:f44f286046d9443b2aeb895c0e1f4e688698247427bca4d15112c8e3432a803e"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2025-09-10T13:27:10.743741265Z"
+        }
+    }
+]
+root@d1d481a3f766967c:~# 
+
+
 6
 Save the my-alpine:v1 image to a file named alpine.tar.
 SOLUTION:
 sudo docker save -o alpine.tar my-alpine:v1
+
+root@d1d481a3f766967c:~# docker save -o alpine.tar my-alpine:v1
+root@d1d481a3f766967c:~# ls
+alpine.tar
 
 7
 Remove the local image to simulate a clean system.
